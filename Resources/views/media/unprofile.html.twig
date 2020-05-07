@@ -1,0 +1,13 @@
+{% extends 'default/template/template.html.twig' %}
+
+{% block title %}
+    <i class="{{ include('@UserMedia/media/_unprofile_ico.html.twig', with_context = false) }}"></i>
+    {{ 'title.user.media.unprofile'|trans({}, 'user_media') }}
+{% endblock %}
+
+{% block content %}
+    <p>
+        {{ ('user.media.unprofile')|trans({}, 'user_media') }}
+    </p>
+    {{ include('@UserMedia/media/_unprofile_content.html.twig', with_context = false) }}
+{% endblock %}

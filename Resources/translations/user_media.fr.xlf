@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="action.upload">
+                <source>action.upload</source>
+                <target><![CDATA[Charger des fichiers (images ou vidéos)<br> <small>Vous pouvez également glisser des fichiers ici</small>]]></target>
+            </trans-unit>
+            <trans-unit id="action.user.media.delete">
+                <source>action.user.media.delete</source>
+                <target>Supprimer le média</target>
+            </trans-unit>
+            <trans-unit id="action.user.media.edit">
+                <source>action.user.media.edit</source>
+                <target>Modifier le média</target>
+            </trans-unit>
+            <trans-unit id="action.user.media.profile">
+                <source>action.user.media.profile</source>
+                <target>Définir comme photo de profil</target>
+            </trans-unit>
+            <trans-unit id="action.user.media.unprofile">
+                <source>action.user.media.unprofile</source>
+                <target>Supprimer cette photo de profil</target>
+            </trans-unit>
+
+            <trans-unit id="binary.b">
+                <source>binary.b</source>
+                <target>o</target>
+            </trans-unit>
+            <trans-unit id="binary.kb">
+                <source>binary.kb</source>
+                <target>Ko</target>
+            </trans-unit>
+            <trans-unit id="binary.mb">
+                <source>binary.mb</source>
+                <target>Mo</target>
+            </trans-unit>
+            <trans-unit id="binary.gb">
+                <source>binary.gb</source>
+                <target>Go</target>
+            </trans-unit>
+            <trans-unit id="binary.tb">
+                <source>binary.tb</source>
+                <target>To</target>
+            </trans-unit>
+
+            <trans-unit id="label.finished">
+                <source>label.finished</source>
+                <target>Terminé</target>
+            </trans-unit>
+            <trans-unit id="label.in_progress">
+                <source>label.in_progress</source>
+                <target>En cours</target>
+            </trans-unit>
+            <trans-unit id="label.media">
+                <source>label.media</source>
+                <target>Média</target>
+            </trans-unit>
+
+            <trans-unit id="title.user.media.delete">
+                <source>title.user.media.delete</source>
+                <target>Supprimer un média</target>
+            </trans-unit>
+            <trans-unit id="title.user.media.edit">
+                <source>title.user.media.edit</source>
+                <target>Modifier un média</target>
+            </trans-unit>
+            <trans-unit id="title.user.media.profile">
+                <source>title.user.media.profile</source>
+                <target>Définir en tant que photo de profil</target>
+            </trans-unit>
+            <trans-unit id="title.user.media.unprofile">
+                <source>title.user.media.unprofile</source>
+                <target>Supprimer la photo de profil</target>
+            </trans-unit>
+
+            <trans-unit id="user.media.delete.profile">
+                <source>user.media.delete.profile</source>
+                <target>Attention, il s'agit de photo de profil : celle-ci sera supprimée.</target>
+            </trans-unit>
+            <trans-unit id="user.media.deleted_successfully">
+                <source>user.media.deleted_successfully</source>
+                <target>Le média a été supprimé.</target>
+            </trans-unit>
+            <trans-unit id="user.media.delete">
+                <source>user.media.delete</source>
+                <target>Souhaitez-vous réellement supprimer ce média ?</target>
+            </trans-unit>
+            <trans-unit id="user.media.profile">
+                <source>user.media.profile</source>
+                <target>Souhaitez-vous définir ce média en tant que photo de profil ?</target>
+            </trans-unit>
+            <trans-unit id="user.media.profiled_successfully">
+                <source>user.media.profiled_successfully</source>
+                <target>Le média a été défini comme photo de profil.</target>
+            </trans-unit>
+            <trans-unit id="user.media.unrofile">
+                <source>user.media.unprofile</source>
+                <target>Souhaitez-vous réellement supprimer votre photo de profil ?</target>
+            </trans-unit>
+            <trans-unit id="user.media.unprofiled_successfully">
+                <source>user.media.unprofiled_successfully</source>
+                <target>La photo de profil a été supprimée.</target>
+            </trans-unit>
+            <trans-unit id="user.media.updated_successfully">
+                <source>user.media.updated_successfully</source>
+                <target>Le média a été modifié.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

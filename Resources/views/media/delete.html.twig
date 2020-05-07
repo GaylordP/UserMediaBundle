@@ -1,0 +1,20 @@
+{% extends 'default/template/template.html.twig' %}
+
+{% block title %}
+    <i class="{{ include('@BootstrapComponent/ico/_delete.html.twig', with_context = false) }}"></i>
+    {{ 'title.user.media.delete'|trans({}, 'user_media') }}
+{% endblock %}
+
+{% block content %}
+    <p>
+        {{ ('user.media.delete')|trans({}, 'user_media') }}
+    </p>
+    {% if null != app.user.userMedia and app.user.userMedia == user_media %}
+        <div class="alert alert-danger">
+            <p class="mb-0">
+                {{ 'user.media.delete.profile'|trans({}, 'user_media') }}
+            </p>
+        </div>
+    {% endif %}
+    {{ include('@UserMedia/media/_delete_content.html.twig', with_context = false) }}
+{% endblock %}

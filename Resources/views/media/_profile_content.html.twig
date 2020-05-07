@@ -1,0 +1,11 @@
+<form action="{{ app.request.requestUri }}" method="post">
+    <input type="hidden" name="token" value="{{ csrf_token('profile') }}">
+    {{ 'action.user.media.profile'|trans({}, 'user_media')|button(
+        '_edit_',
+        include('@UserMedia/media/_profile_ico.html.twig', with_context = false),
+        false,
+        {
+            'type': 'submit',
+        }
+    ) }}
+</form>

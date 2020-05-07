@@ -1,0 +1,14 @@
+{% extends 'default/template/template.html.twig' %}
+
+{% block title %}
+    <i class="{{ include('@BootstrapComponent/ico/_edit.html.twig', with_context = false) }}"></i>
+    {{ 'title.user.media.edit'|trans({}, 'user_media') }}
+{% endblock %}
+
+{% block content %}
+    {{ include('@UserMedia/media/_edit_content.html.twig',
+        {
+            'form': form,
+        }, with_context = false
+    ) }}
+{% endblock %}

@@ -1,0 +1,36 @@
+services:
+    GaylordP\UserMediaBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+        autoconfigure: true
+        autowire: true
+
+    GaylordP\UserMediaBundle\EventListener\MediaListener:
+        arguments:
+            - '@parameter_bag'
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+            -
+                name: 'doctrine.event_listener'
+                event: 'postPersist'
+
+    GaylordP\UserMediaBundle\Form\DataTransformer\UploadTransformer:
+        arguments:
+            - '@parameter_bag'
+
+    GaylordP\UserMediaBundle\Form\Type\UploadType:
+        arguments:
+            - '@parameter_bag'
+            - '@GaylordP\UserMediaBundle\Form\DataTransformer\UploadTransformer'
+            - '@validator'
+            - '@translator'
+        tags:
+            - 'form.type'
+
+    GaylordP\UserMediaBundle\Twig\Extension:
+        arguments:
+            - '@twig'
+        tags:
+            - 'twig.extension'

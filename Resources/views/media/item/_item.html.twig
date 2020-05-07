@@ -1,0 +1,31 @@
+<div class="media-container col-6 col-md-4 col-lg-3">
+    <a class="media-link" href="{{ path('member_media',
+        {
+            'slug': user_media.createdBy.slug,
+            'uuid': user_media.media.uuid,
+        }
+    ) }}" data-toggle="modal" data-target="#appModal" data-title="{{ 'label.user.media.photo'|trans(
+        {
+            '%username%': '@' ~ user_media.createdBy.username,
+        }
+    ) }}">
+        {#
+        {{ include('@UserMedia/media/item/_item_media.html.twig',
+            {
+                'user_media': user_media,
+            },
+            with_context = false
+        ) }}
+        #}
+    </a>
+    {#
+    {{ include('media/item/_control.html.twig',
+        {
+            'user_media': user_media,
+            'user_media_social': user_media_social ?? null,
+            'count_view': count_view ?? null,
+        },
+        with_context = false
+    ) }}
+    #}
+</div>

@@ -1,0 +1,11 @@
+<form action="{{ app.request.requestUri }}" method="post">
+    <input type="hidden" name="token" value="{{ csrf_token('unprofile') }}">
+    {{ 'action.user.media.unprofile'|trans({}, 'user_media')|button(
+        '_delete_',
+        include('@UserMedia/media/_unprofile_ico.html.twig', with_context = false),
+        false,
+        {
+            'type': 'submit',
+        }
+    ) }}
+</form>
