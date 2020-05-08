@@ -4,6 +4,7 @@ namespace GaylordP\UserMediaBundle\Entity;
 
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use GaylordP\UploadBundle\Entity\Media;
 use GaylordP\UserBundle\Annotation\CreatedAt;
 use GaylordP\UserBundle\Annotation\CreatedBy;
 use GaylordP\UserBundle\Entity\Traits\Deletable;
@@ -32,7 +33,7 @@ class UserMedia
      * @var Media
      *
      * @ORM\OneToOne(
-     *     targetEntity="GaylordP\UserMediaBundle\Entity\Media",
+     *     targetEntity="GaylordP\UploadBundle\Entity\Media",
      *     cascade={"persist"},
      *     fetch="EAGER"
      * )
