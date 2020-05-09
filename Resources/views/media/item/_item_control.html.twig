@@ -1,0 +1,17 @@
+{% set controls = user_media_item_control() %}
+
+{% for position, views in controls %}
+    {% if views is not empty %}
+        <div class="control-{{ position }}">
+            {% apply spaceless %}
+                {% for view in views %}
+                    {{ include(view,
+                        {
+                            'user_media': user_media,
+                        }, with_context = false
+                    ) }}
+                {% endfor %}
+            {% endapply %}
+        </div>
+    {% endif %}
+{% endfor %}

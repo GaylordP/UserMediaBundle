@@ -1,0 +1,13 @@
+{{ null|button_link(
+    path('user_media_delete',
+        {
+            'uuid': user_media.media.uuid,
+        }
+    ),
+    '_delete_',
+    null,
+    true,
+    {
+        'class': 'btn-sm',
+    }
+) }}

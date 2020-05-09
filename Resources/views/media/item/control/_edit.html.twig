@@ -1,0 +1,13 @@
+{{ null|button_link(
+    path('user_media_edit',
+        {
+            'uuid': user_media.media.uuid,
+        }
+    ),
+    '_edit_',
+    null,
+    true,
+    {
+        'class': 'btn-sm',
+    }
+) }}

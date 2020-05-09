@@ -1,0 +1,70 @@
+.media-container {
+    display: flex;
+}
+
+.media-container > div.control-top,
+.media-container > div.control-bottom {
+    position: absolute;
+    right: 0;
+    margin-right: .25rem;
+    z-index: 904;
+    text-align: right;
+}
+
+.media-container > div.control-top > *:not(:first-child),
+.media-container > div.control-bottom > *:not(:first-child) {
+    margin-left: .25rem;
+}
+
+.media-container> div.control-top {
+    margin-top: .25rem;
+}
+
+.media-container > div.control-top > * {
+    margin-bottom: .25rem;
+}
+
+.media-container > div.control-bottom {
+    bottom: 0;
+    margin-bottom: .25rem;
+}
+
+.media-container > div.control-bottom > * {
+    margin-top: .25rem;
+}
+
+.media-container > a.media-link {
+    background-color: $gray-200;
+    border: 1px solid $gray-300;
+    padding: .5rem;
+    flex-grow: 1;
+    transition: all .1s linear;
+    text-align: center;
+    text-decoration: none;
+    z-index: 903;
+}
+
+.media-container > a.media-link:hover {
+    background-color: $gray-400;
+    border-color: $gray-400;
+}
+
+.media-container > a.media-link > img,
+.media-container > a.media-link > div > video {
+    border: 1px solid $gray-400;
+    transition: all .1s linear;
+}
+
+.media-container > a.media-link:hover > img,
+.media-container > a.media-link:hover > div > video {
+    border-color: $gray-600;
+}
+
+.media-show > div:first-of-type {
+    text-align: center;
+}
+
+.media-show > h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}

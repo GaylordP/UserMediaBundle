@@ -1,17 +1,5 @@
 {% if user_media.media.isImage %}
-    <img src="{{ path('media_render',
-        {
-            'blur': 'f',
-            'resize': app.request.get('_route') == 'member_media' ? 'r' : 's',
-            'size': app.request.get('_route') == 'member_media' ? '_1080-0_' : '_200-200_',
-            'uuid': user_media.media.uuid,
-            'name': user_media.media.name,
-        }
-    ) }}" alt="{{ 'label.user.media.photo'|trans(
-        {
-            '%username%': '@' ~ user_media.createdBy.username,
-        }
-    ) }}" class="img-fluid img-thumbnail">
+    <img src="{{ media_resize(user_media.media, 600, 600, 'square') }}" class="img-fluid img-thumbnail">
 {% else %}
     <div class="embed-responsive embed-responsive-16by9">
         <video controls class="video-js embed-responsive-item img-thumbnail" id="myVideo">

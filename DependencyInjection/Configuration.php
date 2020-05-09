@@ -16,6 +16,10 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('action_success_redirect_path')
                     ->isRequired()
                 ->end()
+                ->variableNode('item_control_view')
+                ->end()
+                ->variableNode('item_control')
+                ->end()
             ->end()
         ;
 

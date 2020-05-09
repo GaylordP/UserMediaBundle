@@ -4,3 +4,10 @@ services:
         tags: ['controller.service_arguments']
         autoconfigure: true
         autowire: true
+
+    GaylordP\UserMediaBundle\Twig\Extension:
+        arguments:
+            - '@request_stack'
+            - '%user_media%'
+        tags:
+            - 'twig.extension'
