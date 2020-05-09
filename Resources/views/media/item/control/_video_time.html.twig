@@ -1,0 +1,12 @@
+{% if user_media.media.videoTime %}
+    {{ ('<i class="fa fa-clock mr-1"></i> <span class="badge badge-light">' ~ user_media.media.videoTime|format_time('short') ~ '</span>')|label(
+        'secondary',
+        null,
+        false,
+        {
+            'class': 'label-sm',
+            'data-toggle': 'tooltip',
+            'title': 'label.duration'|trans({}, 'user_media'),
+        }
+    ) }}
+{% endif %}

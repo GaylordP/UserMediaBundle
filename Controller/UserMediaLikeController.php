@@ -3,7 +3,7 @@
 namespace GaylordP\UserMediaBundle\Controller;
 
 use App\Entity\UserMedia;
-use App\Entity\UserMediaLike;
+use GaylordP\UserMediaBundle\Entity\UserMediaLike;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +16,12 @@ class UserMediaLikeController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{uuid}/like",
+     *         "fr": "/user/media/{token}/like",
      *     },
      *     name="user_media_like",
      *     methods="GET"
      * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
+     * @Entity("userMedia", expr="repository.findOneByToken(token)")
      */
     public function like(
         Request $request,
@@ -36,14 +36,19 @@ class UserMediaLikeController extends AbstractController
         ]);
 
         if (null !== $findLike) {
+            $findLike->setDeletedBy($this->getUser());
+            $findLike->setDeletedAt(new \DateTime());
+
+            $entityManager->flush();
+
             $this->get('session')->getFlashBag()->add(
-                'danger',
+                'success',
                 [
-                    'user.media.like_already',
+                    'user.media.unlike_successfully',
+                    [],
+                    'user_media'
                 ]
             );
-
-            return $this->redirectAfterAction($request, $router, $userMedia);
         } else {
             $userMediaLike = new UserMediaLike();
             $userMediaLike->setUserMedia($userMedia);
@@ -55,66 +60,12 @@ class UserMediaLikeController extends AbstractController
                 'success',
                 [
                     'user.media.like_successfully',
+                    [],
+                    'user_media'
                 ]
             );
-
-            return $this->redirectAfterAction($request, $router, $userMedia);
         }
-    }
 
-    /**
-     * @Route(
-     *     {
-     *         "fr": "/user/media/{uuid}/unlike",
-     *     },
-     *     name="user_media_unlike",
-     *     methods="GET"
-     * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
-     */
-    public function unlike(
-        Request $request,
-        RouterInterface $router,
-        UserMedia $userMedia
-    ): Response {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $findLike = $entityManager->getRepository(UserMediaLike::class)->findOneBy([
-            'createdBy' => $this->getUser(),
-            'userMedia' => $userMedia,
-        ]);
-
-        if (null === $findLike) {
-            $this->get('session')->getFlashBag()->add(
-                'danger',
-                [
-                    'user.media.unlike_already',
-                ]
-            );
-
-            return $this->redirectAfterAction($request, $router, $userMedia);
-        } else {
-            $findLike->setDeletedBy($this->getUser());
-            $findLike->setDeletedAt(new \DateTime());
-
-            $entityManager->flush();
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                [
-                    'user.media.unlike_successfully',
-                ]
-            );
-
-            return $this->redirectAfterAction($request, $router, $userMedia);
-        }
-    }
-
-    private function redirectAfterAction(
-        Request $request,
-        RouterInterface $router,
-        UserMedia $userMedia
-    ): Response {
         if (
             null !== $request->headers->get('referer')
                 &&

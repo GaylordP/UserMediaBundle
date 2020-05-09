@@ -13,31 +13,13 @@ class UserMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, UserMedia::class);
     }
 
-    public function findOneByUuid(string $uuid): ?UserMedia
+    public function findOneByToken(string $token): ?UserMedia
     {
         return $this
             ->createQueryBuilder('userMedia')
             ->innerJoin('userMedia.media', 'media')
-            ->andWhere('media.uuid = :uuid')
-            ->setParameter('uuid', $uuid)
-            ->select('
-                userMedia,
-                media
-            ')
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
-    public function findOneByUuidAndName(string $uuid, string $name): ?UserMedia
-    {
-        return $this
-            ->createQueryBuilder('userMedia')
-            ->innerJoin('userMedia.media', 'media')
-            ->andWhere('media.uuid = :uuid')
-            ->andWhere('media.name = :name')
-            ->setParameter('uuid', $uuid)
-            ->setParameter('name', $name)
+            ->andWhere('media.token = :token')
+            ->setParameter('token', $token)
             ->select('
                 userMedia,
                 media

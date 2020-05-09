@@ -1,11 +1,11 @@
-{% extends 'default/template/template.html.twig' %}
+{% extends '@UserMedia/media/_media_manage_template.html.twig' %}
 
 {% block title %}
     <i class="{{ include('@BootstrapComponent/ico/_delete.html.twig', with_context = false) }}"></i>
     {{ 'title.user.media.delete'|trans({}, 'user_media') }}
 {% endblock %}
 
-{% block content %}
+{% block content_manage %}
     <p>
         {{ ('user.media.delete')|trans({}, 'user_media') }}
     </p>

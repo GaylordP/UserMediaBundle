@@ -1,0 +1,31 @@
+{% if user_media.media.isImage %}
+    {% if app.user.userMedia != user_media %}
+        {{ 'action.user.media.profile'|trans({}, 'user_media')|button_link(
+            path('user_media_profile',
+                {
+                    'token': user_media.media.token,
+                }
+            ),
+            '_edit_',
+            'fas fa-user-circle',
+            true,
+            {
+                'class': 'btn-sm',
+            }
+        ) }}
+    {% else %}
+        {{ 'action.user.media.unprofile'|trans({}, 'user_media')|button_link(
+            path('user_media_unprofile',
+                {
+                    'token': user_media.media.token,
+                }
+            ),
+            '_edit_',
+            'fas fa-user-slash',
+            true,
+            {
+                'class': 'btn-sm',
+            }
+        ) }}
+    {% endif %}
+{% endif %}

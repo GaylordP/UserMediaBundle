@@ -4,7 +4,7 @@ namespace GaylordP\UserMediaBundle\Controller;
 
 use App\Entity\UserMedia;
 use App\Form\UserMediaType;
-use GaylordP\UserMediaBundle\Util\IsImage;
+use GaylordP\UploadBundle\Util\IsImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,7 +17,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{uuid}/edit",
+     *         "fr": "/user/media/{token}/edit",
      *     },
      *     name="user_media_edit",
      *     methods=
@@ -26,7 +26,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
+     * @Entity("userMedia", expr="repository.findOneByToken(token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function edit(Request $request, UserMedia $userMedia): Response
@@ -59,7 +59,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{uuid}/delete",
+     *         "fr": "/user/media/{token}/delete",
      *     },
      *     name="user_media_delete",
      *     methods=
@@ -68,7 +68,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
+     * @Entity("userMedia", expr="repository.findOneByToken(token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function delete(Request $request, UserMedia $userMedia): Response
@@ -105,7 +105,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{uuid}/profile",
+     *         "fr": "/user/media/{token}/profile",
      *     },
      *     name="user_media_profile",
      *     methods=
@@ -114,7 +114,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
+     * @Entity("userMedia", expr="repository.findOneByToken(token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function profile(
@@ -156,7 +156,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{uuid}/unprofile",
+     *         "fr": "/user/media/{token}/unprofile",
      *     },
      *     name="user_media_unprofile",
      *     methods=
@@ -165,7 +165,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByUuid(uuid)")
+     * @Entity("userMedia", expr="repository.findOneByToken(token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function unprofile(

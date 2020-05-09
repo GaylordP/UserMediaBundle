@@ -10,13 +10,30 @@
                 <source>action.user.media.edit</source>
                 <target>Modifier le média</target>
             </trans-unit>
+            <trans-unit id="action.user.media.like">
+                <source>action.user.media.like</source>
+                <target>J'aime</target>
+            </trans-unit>
             <trans-unit id="action.user.media.profile">
                 <source>action.user.media.profile</source>
                 <target>Définir comme photo de profil</target>
             </trans-unit>
+            <trans-unit id="action.user.media.unlike">
+                <source>action.user.media.unlike</source>
+                <target>Je n'aime plus</target>
+            </trans-unit>
             <trans-unit id="action.user.media.unprofile">
                 <source>action.user.media.unprofile</source>
                 <target>Supprimer cette photo de profil</target>
+            </trans-unit>
+
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target>Durée.</target>
+            </trans-unit>
+            <trans-unit id="label.user.media.photo">
+                <source>label.user.media.photo</source>
+                <target>Photo de « %username% »</target>
             </trans-unit>
 
             <trans-unit id="title.user.media.delete">
@@ -48,6 +65,10 @@
                 <source>user.media.delete</source>
                 <target>Souhaitez-vous réellement supprimer ce média ?</target>
             </trans-unit>
+            <trans-unit id="user.media.like_successfully">
+                <source>user.media.like_successfully</source>
+                <target>La mention « J'aime » a été ajoutée au média.</target>
+            </trans-unit>
             <trans-unit id="user.media.profile">
                 <source>user.media.profile</source>
                 <target>Souhaitez-vous définir ce média en tant que photo de profil ?</target>
@@ -56,7 +77,11 @@
                 <source>user.media.profiled_successfully</source>
                 <target>Le média a été défini comme photo de profil.</target>
             </trans-unit>
-            <trans-unit id="user.media.unrofile">
+            <trans-unit id="user.media.unlike_successfully">
+                <source>user.media.unlike_successfully</source>
+                <target>La mention « J'aime » a été retirée du média.</target>
+            </trans-unit>
+            <trans-unit id="user.media.unprofile">
                 <source>user.media.unprofile</source>
                 <target>Souhaitez-vous réellement supprimer votre photo de profil ?</target>
             </trans-unit>
@@ -67,6 +92,11 @@
             <trans-unit id="user.media.updated_successfully">
                 <source>user.media.updated_successfully</source>
                 <target>Le média a été modifié.</target>
+            </trans-unit>
+
+            <trans-unit id="video.browser.support">
+                <source>video.browser.support</source>
+                <target><![CDATA[Votre navigateur ne supporte pas les vidéos. Veuillez nous contacter si le problème persiste.]]></target>
             </trans-unit>
         </body>
     </file>

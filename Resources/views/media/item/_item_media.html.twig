@@ -1,20 +1,15 @@
 {% if user_media.media.isImage %}
-    <img src="{{ media_resize(user_media.media, 600, 600, 'square') }}" class="img-fluid img-thumbnail">
+    <img src="{{ media_resize(user_media.media, width ?? 600, height ?? 600, resize ?? 'square') }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
+        {
+            '%username%': '@' ~ user_media.createdBy.username,
+        },
+        'user_media'
+    ) }}">
 {% else %}
     <div class="embed-responsive embed-responsive-16by9">
-        <video controls class="video-js embed-responsive-item img-thumbnail" id="myVideo">
-            <source src="/upload/f/f/f/{{ user_media.media.uuid }}/{{ user_media.media.name }}" type="video/mp4">
-            {{ 'video.browser.support'|trans(
-                {
-                    '%contact_link%': path('contact'),
-                }
-            )|raw }}
+        <video controls class="video-js embed-responsive-item img-thumbnail">
+            <source src="/upload/{{ user_media.media.token }}/{{ user_media.media.name }}" type="{{ user_media.media.mime }}">
+            {{ 'video.browser.support'|trans({}, 'user_media') }}
         </video>
-      <script>
-            var vid = document.getElementById("myVideo");
-            vid.onplay = function() {
-                alert("The video has started to play");
-            };
-        </script>
     </div>
 {% endif %}

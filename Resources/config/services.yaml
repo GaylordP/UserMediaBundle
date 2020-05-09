@@ -5,6 +5,17 @@ services:
         autoconfigure: true
         autowire: true
 
+    GaylordP\UserMediaBundle\Provider\UserMediaProvider:
+        arguments:
+            - '@security.helper'
+            - '@GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository'
+
+    GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository:
+        arguments:
+            - '@doctrine'
+        tags:
+            - 'doctrine.repository_service'
+
     GaylordP\UserMediaBundle\Twig\Extension:
         arguments:
             - '@request_stack'
