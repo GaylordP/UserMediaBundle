@@ -9,6 +9,13 @@ services:
         arguments:
             - '@security.helper'
             - '@GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository'
+            - '@GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository'
+
+    GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository:
+        arguments:
+            - '@doctrine'
+        tags:
+            - 'doctrine.repository_service'
 
     GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository:
         arguments:

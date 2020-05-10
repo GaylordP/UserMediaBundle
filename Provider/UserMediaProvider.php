@@ -3,28 +3,34 @@
 namespace GaylordP\UserMediaBundle\Provider;
 
 use App\Entity\UserMedia;
+use GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository;
 use GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository;
 use Symfony\Component\Security\Core\Security;
 
 class UserMediaProvider
 {
+    const COUNT_COMMENT = '__countComment';
     const COUNT_LIKE = '__countLike';
     const IS_USER_LIKED = '__isUserLiked';
 
     private $user;
     private $userMediaLikeRepository;
+    private $userMediaCommentRepository;
 
     public function __construct(
         Security $security,
-        UserMediaLikeRepository $userMediaLikeRepository
+        UserMediaLikeRepository $userMediaLikeRepository,
+        UserMediaCommentRepository $userMediaCommentRepository
     ) {
         $this->user = $security->getUser();
         $this->userMediaLikeRepository = $userMediaLikeRepository;
+        $this->userMediaCommentRepository = $userMediaCommentRepository;
     }
 
     public function addExtraInfos(
         $userMedia,
-        bool $countLikeAndisUserLiked = false
+        bool $countLikeAndisUserLiked = false,
+        bool $countComment = false
     ) {
         $ids = [];
         $listEntitiesById = [];
@@ -57,6 +63,14 @@ class UserMediaProvider
                 }
             }
 
+            if (true === $countComment) {
+                $comments = $this->userMediaCommentRepository->countByUserMediaId($ids);
+
+                foreach ($comments as $comment) {
+                    $listEntitiesById[$comment['user_media_id']]->{self::COUNT_COMMENT} = $comment['count_comment'];
+                }
+            }
+
             foreach ($listEntitiesById as $entity) {
                 if (true === $countLikeAndisUserLiked) {
                     if (false === property_exists($entity, self::COUNT_LIKE)) {
@@ -64,6 +78,12 @@ class UserMediaProvider
                     }
                     if (false === property_exists($entity, self::IS_USER_LIKED)) {
                         $entity->{self::IS_USER_LIKED} = false;
+                    }
+                }
+
+                if (true === $countComment) {
+                    if (false === property_exists($entity, self::COUNT_COMMENT)) {
+                        $entity->{self::COUNT_COMMENT} = 0;
                     }
                 }
             }

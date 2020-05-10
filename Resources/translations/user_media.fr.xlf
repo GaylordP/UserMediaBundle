@@ -27,6 +27,10 @@
                 <target>Supprimer cette photo de profil</target>
             </trans-unit>
 
+            <trans-unit id="label.count_comment">
+                <source>label.count_comment</source>
+                <target>Nombre de commentaires</target>
+            </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
                 <target>Durée.</target>
@@ -35,7 +39,15 @@
                 <source>label.user.media.photo</source>
                 <target>Photo de « %username% »</target>
             </trans-unit>
+            <trans-unit id="label.your_comment">
+                <source>label.your_comment</source>
+                <target>Votre commentaire</target>
+            </trans-unit>
 
+            <trans-unit id="title.comments">
+                <source>title.comments</source>
+                <target>Commentaires</target>
+            </trans-unit>
             <trans-unit id="title.user.media.delete">
                 <source>title.user.media.delete</source>
                 <target>Supprimer un média</target>
@@ -44,6 +56,10 @@
                 <source>title.user.media.edit</source>
                 <target>Modifier un média</target>
             </trans-unit>
+            <trans-unit id="title.user.media.photo">
+                <source>title.user.media.photo</source>
+                <target>Photo de %username%</target>
+            </trans-unit>
             <trans-unit id="title.user.media.profile">
                 <source>title.user.media.profile</source>
                 <target>Définir en tant que photo de profil</target>
@@ -51,6 +67,10 @@
             <trans-unit id="title.user.media.unprofile">
                 <source>title.user.media.unprofile</source>
                 <target>Supprimer la photo de profil</target>
+            </trans-unit>
+            <trans-unit id="title.user.media.video">
+                <source>title.user.media.video</source>
+                <target>Vidéo de %username%</target>
             </trans-unit>
 
             <trans-unit id="user.media.delete.profile">
@@ -68,6 +88,14 @@
             <trans-unit id="user.media.like_successfully">
                 <source>user.media.like_successfully</source>
                 <target>La mention « J'aime » a été ajoutée au média.</target>
+            </trans-unit>
+            <trans-unit id="user.media.photo.comment.created_successfully">
+                <source>user.media.photo.comment.created_successfully</source>
+                <target>Votre commentaire a été ajouté à la photo.</target>
+            </trans-unit>
+            <trans-unit id="user.media.photo.comment.not_found">
+                <source>user.media.photo.comment.not_found</source>
+                <target>Il n'y a aucun commentaire sur cette photo.</target>
             </trans-unit>
             <trans-unit id="user.media.profile">
                 <source>user.media.profile</source>
@@ -92,6 +120,14 @@
             <trans-unit id="user.media.updated_successfully">
                 <source>user.media.updated_successfully</source>
                 <target>Le média a été modifié.</target>
+            </trans-unit>
+            <trans-unit id="user.media.video.comment.created_successfully">
+                <source>user.media.video.comment.created_successfully</source>
+                <target>Votre commentaire a été ajouté à la vidéo.</target>
+            </trans-unit>
+            <trans-unit id="user.media.video.comment.not_found">
+                <source>user.media.video.comment.not_found</source>
+                <target>Il n'y a aucun commentaire sur cette vidéo.</target>
             </trans-unit>
 
             <trans-unit id="video.browser.support">

@@ -17,7 +17,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{token}/edit",
+     *         "fr": "/user/media/{_token}/edit",
      *     },
      *     name="user_media_edit",
      *     methods=
@@ -26,7 +26,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByToken(token)")
+     * @Entity("userMedia", expr="repository.findOneByToken(_token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function edit(Request $request, UserMedia $userMedia): Response
@@ -59,7 +59,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{token}/delete",
+     *         "fr": "/user/media/{_token}/delete",
      *     },
      *     name="user_media_delete",
      *     methods=
@@ -68,7 +68,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByToken(token)")
+     * @Entity("userMedia", expr="repository.findOneByToken(_token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function delete(Request $request, UserMedia $userMedia): Response
@@ -105,7 +105,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{token}/profile",
+     *         "fr": "/user/media/{_token}/profile",
      *     },
      *     name="user_media_profile",
      *     methods=
@@ -114,7 +114,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByToken(token)")
+     * @Entity("userMedia", expr="repository.findOneByToken(_token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function profile(
@@ -156,7 +156,7 @@ class UserMediaController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{token}/unprofile",
+     *         "fr": "/user/media/{_token}/unprofile",
      *     },
      *     name="user_media_unprofile",
      *     methods=
@@ -165,7 +165,7 @@ class UserMediaController extends AbstractController
      *         "POST",
      *     }
      * )
-     * @Entity("userMedia", expr="repository.findOneByToken(token)")
+     * @Entity("userMedia", expr="repository.findOneByToken(_token)")
      * @Security("user.getId() === userMedia.getCreatedBy().getId()")
      */
     public function unprofile(

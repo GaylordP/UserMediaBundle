@@ -1,0 +1,16 @@
+{{ ('<i class="' ~ include('@UserMedia/member/_comment_ico.html.twig', with_context = false) ~ ' mr-1"></i> <span class="badge badge-light">' ~ user_media.__countComment ~ '</span>')|button_link(
+    path('member_media',
+        {
+            'slug': user_media.createdBy.slug,
+            '_token': user_media.media.token,
+        }
+    ),
+    'blue',
+    null,
+    false,
+    {
+        'class': 'btn-sm',
+        'data-toggle': 'tooltip',
+        'title': 'label.count_comment'|trans({}, 'user_media'),
+    }
+) }}

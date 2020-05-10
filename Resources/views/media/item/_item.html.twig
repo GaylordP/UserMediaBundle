@@ -1,10 +1,10 @@
 <div class="media-container col-6 col-md-4 col-lg-3">
-    <a class="media-link" href="{#{{ path('member_media',
+    <a class="media-link" href="{{ path('member_media',
         {
             'slug': user_media.createdBy.slug,
-            'token': user_media.media.token,
+            '_token': user_media.media.token,
         }
-    ) }}#}" data-toggle="modal" data-target="#appModal">
+    ) }}">
         {{ include('@UserMedia/media/item/_item_media.html.twig',
             {
                 'user_media': user_media,

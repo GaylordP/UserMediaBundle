@@ -16,12 +16,12 @@ class UserMediaLikeController extends AbstractController
     /**
      * @Route(
      *     {
-     *         "fr": "/user/media/{token}/like",
+     *         "fr": "/user/media/{_token}/like",
      *     },
      *     name="user_media_like",
      *     methods="GET"
      * )
-     * @Entity("userMedia", expr="repository.findOneByToken(token)")
+     * @Entity("userMedia", expr="repository.findOneByToken(_token)")
      */
     public function like(
         Request $request,

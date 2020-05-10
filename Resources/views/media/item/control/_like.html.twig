@@ -1,7 +1,7 @@
 {{ ('<i class="fas fa-heart mr-1"></i> <span class="badge badge-light">' ~ user_media.__countLike ~ '</span>')|button_link(
     path('user_media_like',
         {
-            'token': user_media.media.token,
+            '_token': user_media.media.token,
         }
     ),
     false == user_media.__isUserLiked ? 'secondary' : 'red',
