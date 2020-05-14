@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class Extension extends AbstractExtension
 {
-    private $request;
+    private $requestStack;
     private $parameterUserMedia;
     private $views = [
         'top' => [],
@@ -19,7 +19,7 @@ class Extension extends AbstractExtension
         RequestStack $requestStack,
         array $parameterUserMedia
     ) {
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->parameterUserMedia = $parameterUserMedia;
 
         $this->initViews();
@@ -44,11 +44,11 @@ class Extension extends AbstractExtension
     private function initViews(): void
     {
         if (
-            null !== $this->request
+            null !== $this->requestStack->getCurrentRequest()
                 &&
-            array_key_exists($this->request->get('_route'), $this->parameterUserMedia['item_control'])
+            array_key_exists($this->requestStack->getCurrentRequest()->get('_route'), $this->parameterUserMedia['item_control'])
         ) {
-            $controls = $this->parameterUserMedia['item_control'][$this->request->get('_route')];
+            $controls = $this->parameterUserMedia['item_control'][$this->requestStack->getCurrentRequest()->get('_route')];
 
             foreach (['top', 'bottom'] as $position) {
                 if (array_key_exists($position, $controls)) {

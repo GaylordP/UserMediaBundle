@@ -13,7 +13,7 @@ class UserMediaProvider
     const COUNT_LIKE = '__countLike';
     const IS_USER_LIKED = '__isUserLiked';
 
-    private $user;
+    private $security;
     private $userMediaLikeRepository;
     private $userMediaCommentRepository;
 
@@ -22,7 +22,7 @@ class UserMediaProvider
         UserMediaLikeRepository $userMediaLikeRepository,
         UserMediaCommentRepository $userMediaCommentRepository
     ) {
-        $this->user = $security->getUser();
+        $this->security = $security;
         $this->userMediaLikeRepository = $userMediaLikeRepository;
         $this->userMediaCommentRepository = $userMediaCommentRepository;
     }
@@ -55,7 +55,7 @@ class UserMediaProvider
                 }
 
                 if (null !== $this->user) {
-                    $userLikes = $this->userMediaLikeRepository->getUserLikedByUserMediaId($this->user, $ids);
+                    $userLikes = $this->userMediaLikeRepository->getUserLikedByUserMediaId($this->security->getUser(), $ids);
 
                     foreach ($userLikes as $userLike) {
                         $listEntitiesById[$userLike['user_media_id']]->{self::IS_USER_LIKED} = true;
