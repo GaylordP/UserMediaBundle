@@ -11,6 +11,7 @@ use GaylordP\UserMediaBundle\Provider\UserMediaProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,7 +64,7 @@ class MemberMediaController extends AbstractController
 
             return $this->redirectToRoute('member_media', [
                 'slug' => $userMedia->getCreatedBy()->getSlug(),
-                'token' => $userMedia->getMedia()->getToken(),
+                '_token' => $userMedia->getMedia()->getToken(),
             ]);
         }
 
@@ -85,10 +86,26 @@ class MemberMediaController extends AbstractController
             true
         );
 
-        return $this->render('@UserMedia/member/media.html.twig', [
-            'user_media' => $userMedia,
-            'user_media_comments' => $userMediaComments,
-            'form' => $form->createView(),
-        ]);
+        if ($request->isXmlHttpRequest()) {
+            $userProvider->addExtraInfos($member, true);
+
+            return new JsonResponse([
+                'action' => 'show-modal',
+                'title' => $this->renderView('@UserMedia/member/_title.html.twig', [
+                    'user_media' => $userMedia,
+                ]),
+                'body' => $this->renderView('@UserMedia/member/_content.html.twig', [
+                    'user_media' => $userMedia,
+                    'user_media_comments' => $userMediaComments,
+                   'form' => $form->createView(),
+                ])
+            ], Response::HTTP_PARTIAL_CONTENT);
+        } else {
+            return $this->render('@UserMedia/member/media.html.twig', [
+                'user_media' => $userMedia,
+                'user_media_comments' => $userMediaComments,
+                'form' => $form->createView(),
+            ]);
+        }
     }
 }

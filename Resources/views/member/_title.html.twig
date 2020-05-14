@@ -1,0 +1,18 @@
+{{ include('@User/user/_ico.html.twig',
+    {
+        'user': user_media.createdBy,
+        'size': 'title',
+    },
+    with_context = false
+) }}
+{{ ('title.user.media.' ~ (user_media.media.mime is image ? 'photo' : 'video'))|trans(
+    {
+        '%username%': include('@User/button/_user.html.twig',
+            {
+                'user': user_media.createdBy,
+            },
+            with_context = false
+        )
+    },
+    'user_media'
+)|raw }}
