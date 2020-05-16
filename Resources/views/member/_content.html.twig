@@ -38,47 +38,33 @@
     <h2>
         <i class="{{ include('@UserMedia/member/_comment_ico.html.twig', with_context = false) }}"></i>
         {{ 'title.comments'|trans({}, 'user_media') }}
-        <span class="badge badge-blue">
+        <span class="badge badge-blue" id="user-media-comment-title-{{ user_media.media.token }}">
             {{ user_media_comments|length }}
         </span>
     </h2>
     <div class="comments">
-        {{ form_new(form, null, include('@UserMedia/member/_comment_ico.html.twig', with_context = false)) }}
+        {% if app.user %}
+            {{ include('@UserMedia/member/_comment_form.html.twig',
+                {
+                    'form': form,
+                },
+                with_context = false
+            ) }}
+        {% else %}
+            <div class="alert alert-danger">
+                <p class="mb-0">
+                    {{ ('user.media.' ~ (user_media.media.mime is image ? 'photo' : 'video') ~ '.comment.login_required')|trans({}, 'user_media') }}
+                </p>
+            </div>
+        {% endif %}
         {% if user_media_comments is not empty %}
             {% for comment in user_media_comments %}
-                <div class="comment">
-                    <span class="info">
-                        <span>
-                            <time datetime="{{ comment.createdAt|date('Y-m-d') }}T{{ comment.createdAt|date('H:i:s') }}.000Z">
-                                {{ comment.createdAt|format_date('none', 'd MMMM YYYY') }}
-                                <br>
-                                {{ comment.createdAt|format_time('none', 'H:mm') }}
-                            </time>
-                        </span>
-                        <a href="{{ path('member_profile',
-                            {
-                                'slug': comment.createdBy.slug,
-                            }
-                        ) }}" data-toggle="tooltip" title="{{ 'label.show_profile'|trans({}, 'user') }}">
-                            {{ include('@User/user/_ico.html.twig',
-                                {
-                                    'user': comment.createdBy,
-                                    'size': 'navbar',
-                                },
-                                with_context = false
-                            ) }}
-                        </a>
-                    </span>
-                    <div class="content border-{{ comment.createdBy.color.slug }}">
-                        {{ include('@User/button/_user.html.twig',
-                            {
-                                'user': comment.createdBy,
-                            },
-                            with_context = false
-                        ) }}
-                        {{ comment.content|nl2br }}
-                    </div>
-                </div>
+                {{ include('@UserMedia/member/_comment.html.twig',
+                    {
+                        'comment': comment,
+                    },
+                    with_context = false
+                ) }}
             {% endfor %}
         {% else %}
             <div class="alert alert-danger mb-0">

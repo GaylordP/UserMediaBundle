@@ -46,32 +46,61 @@ class MemberMediaController extends AbstractController
         $userMediaComment = new UserMediaComment();
         $userMediaComment->setUserMedia($userMedia);
 
-        $form = $this->createForm(UserMediaCommentType::class, $userMediaComment);
+        $form = $this->createForm(UserMediaCommentType::class, $userMediaComment, [
+            'attr' => [
+                'action' => $request->getRequestUri(),
+                'data-form-ajax' => 'true',
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($userMediaComment);
             $entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                [
-                    'user.media.' . (true == $userMedia->getMedia()->getIsImage() ? 'photo' : 'video') . '.comment.created_successfully',
-                    [],
-                    'user_media'
-                ]
-            );
+            if ($request->isXmlHttpRequest()) {
+                $userMediaProvider->addExtraInfos($userMedia, true, true);
 
-            return $this->redirectToRoute('member_media', [
-                'slug' => $userMedia->getCreatedBy()->getSlug(),
-                '_token' => $userMedia->getMedia()->getToken(),
-            ]);
+                return new JsonResponse([
+                    [
+                        'action' => 'append',
+                        'target' => '.comments',
+                        'html' => $this->renderView('@UserMedia/member/_comment.html.twig', [
+                            'comment' => $userMediaComment,
+                        ]),
+                    ],
+                    [
+                        'action' => 'html',
+                        'target' => '.user-media-comment-' . $userMedia->getMedia()->getToken() . ' > .badge',
+                        'html' => $userMedia->__countComment,
+                    ],
+                    [
+                        'action' => 'html',
+                        'target' => '#user-media-comment-title-' . $userMedia->getMedia()->getToken(),
+                        'html' => $userMedia->__countComment,
+                    ],
+                ], Response::HTTP_PARTIAL_CONTENT);
+            } else {
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    [
+                        'user.media.' . (true == $userMedia->getMedia()->getIsImage() ? 'photo' : 'video') . '.comment.created_successfully',
+                        [],
+                        'user_media'
+                    ]
+                );
+
+                return $this->redirectToRoute('member_media', [
+                    'slug' => $userMedia->getCreatedBy()->getSlug(),
+                    '_token' => $userMedia->getMedia()->getToken(),
+                ]);
+            }
         }
 
         $userMediaComments = $entityManager
             ->getRepository(UserMediaComment::class)
             ->findByUserMedia($userMedia, [
-                'id' => 'DESC'
+                'id' => 'ASC'
             ])
         ;
 
@@ -87,19 +116,29 @@ class MemberMediaController extends AbstractController
         );
 
         if ($request->isXmlHttpRequest()) {
-            $userProvider->addExtraInfos($member, true);
+            if ($form->isSubmitted()) {
+                return new JsonResponse([
+                    'action' => 'replace',
+                    'target' => '.comments > form',
+                    'html' => $this->renderView('@UserMedia/member/_comment_form.html.twig', [
+                        'form' => $form->createView(),
+                    ]),
+                ], Response::HTTP_PARTIAL_CONTENT);
+            } else {
+                $userProvider->addExtraInfos($member, true);
 
-            return new JsonResponse([
-                'action' => 'show-modal',
-                'title' => $this->renderView('@UserMedia/member/_title.html.twig', [
-                    'user_media' => $userMedia,
-                ]),
-                'body' => $this->renderView('@UserMedia/member/_content.html.twig', [
-                    'user_media' => $userMedia,
-                    'user_media_comments' => $userMediaComments,
-                   'form' => $form->createView(),
-                ])
-            ], Response::HTTP_PARTIAL_CONTENT);
+                return new JsonResponse([
+                    'action' => 'show-modal',
+                    'title' => $this->renderView('@UserMedia/member/_title.html.twig', [
+                        'user_media' => $userMedia,
+                    ]),
+                    'body' => $this->renderView('@UserMedia/member/_content.html.twig', [
+                        'user_media' => $userMedia,
+                        'user_media_comments' => $userMediaComments,
+                        'form' => $form->createView(),
+                    ])
+                ], Response::HTTP_PARTIAL_CONTENT);
+            }
         } else {
             return $this->render('@UserMedia/member/media.html.twig', [
                 'user_media' => $userMedia,

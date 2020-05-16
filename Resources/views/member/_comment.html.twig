@@ -1,0 +1,33 @@
+<div class="comment">
+    <span class="info">
+        <span>
+            <time datetime="{{ comment.createdAt|date('Y-m-d') }}T{{ comment.createdAt|date('H:i:s') }}.000Z">
+                {{ comment.createdAt|format_date('none', 'd MMMM YYYY') }}
+                <br>
+                {{ comment.createdAt|format_time('none', 'H:mm') }}
+            </time>
+        </span>
+        <a href="{{ path('member_profile',
+            {
+                'slug': comment.createdBy.slug,
+            }
+        ) }}" data-toggle="tooltip" title="{{ 'label.show_profile'|trans({}, 'user') }}">
+            {{ include('@User/user/_ico.html.twig',
+                {
+                    'user': comment.createdBy,
+                    'size': 'navbar',
+                },
+                with_context = false
+            ) }}
+        </a>
+    </span>
+    <div class="content border-{{ comment.createdBy.color.slug }}">
+        {{ include('@User/button/_user.html.twig',
+            {
+                'user': comment.createdBy,
+            },
+            with_context = false
+        ) }}
+        {{ comment.content|nl2br }}
+    </div>
+</div>

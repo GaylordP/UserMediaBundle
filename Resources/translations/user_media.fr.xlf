@@ -93,6 +93,10 @@
                 <source>user.media.photo.comment.created_successfully</source>
                 <target>Votre commentaire a été ajouté à la photo.</target>
             </trans-unit>
+            <trans-unit id="user.media.photo.comment.login_required">
+                <source>user.media.photo.comment.login_required</source>
+                <target>Vous devez être connecté pour commenter cette photo.</target>
+            </trans-unit>
             <trans-unit id="user.media.photo.comment.not_found">
                 <source>user.media.photo.comment.not_found</source>
                 <target>Il n'y a aucun commentaire sur cette photo.</target>
@@ -124,6 +128,10 @@
             <trans-unit id="user.media.video.comment.created_successfully">
                 <source>user.media.video.comment.created_successfully</source>
                 <target>Votre commentaire a été ajouté à la vidéo.</target>
+            </trans-unit>
+            <trans-unit id="user.media.video.comment.login_required">
+                <source>user.media.video.comment.login_required</source>
+                <target>Vous devez être connecté pour commenter cette vidéo.</target>
             </trans-unit>
             <trans-unit id="user.media.video.comment.not_found">
                 <source>user.media.video.comment.not_found</source>

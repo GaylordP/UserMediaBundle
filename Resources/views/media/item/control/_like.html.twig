@@ -8,8 +8,7 @@
     null,
     false,
     {
-        'id': 'user-media-like-' ~ user_media.media.token,
-        'class': 'btn-sm',
+        'class': 'btn-sm user-media-like-' ~ user_media.media.token,
         'data-toggle': 'tooltip',
         'title': ('action.user.media.' ~ (false == user_media.__isUserLiked ? 'like' : 'unlike'))|trans({}, 'user_media'),
         'data-front-common-ajax': 'true',

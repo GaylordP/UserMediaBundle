@@ -54,7 +54,7 @@ class UserMediaProvider
                     $listEntitiesById[$like['user_media_id']]->{self::COUNT_LIKE} = $like['count_like'];
                 }
 
-                if (null !== $this->user) {
+                if (null !== $this->security->getUser()) {
                     $userLikes = $this->userMediaLikeRepository->getUserLikedByUserMediaId($this->security->getUser(), $ids);
 
                     foreach ($userLikes as $userLike) {
