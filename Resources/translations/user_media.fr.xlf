@@ -35,6 +35,10 @@
                 <source>label.duration</source>
                 <target>Durée.</target>
             </trans-unit>
+            <trans-unit id="label.media">
+                <source>label.media</source>
+                <target>Média</target>
+            </trans-unit>
             <trans-unit id="label.user.media.photo">
                 <source>label.user.media.photo</source>
                 <target>Photo de « %username% »</target>
@@ -42,6 +46,11 @@
             <trans-unit id="label.your_comment">
                 <source>label.your_comment</source>
                 <target>Votre commentaire</target>
+            </trans-unit>
+
+            <trans-unit id="menu.user.media">
+                <source>menu.user.media</source>
+                <target>Mes médias</target>
             </trans-unit>
 
             <trans-unit id="title.comments">
@@ -88,6 +97,10 @@
             <trans-unit id="user.media.like_successfully">
                 <source>user.media.like_successfully</source>
                 <target>La mention « J'aime » a été ajoutée au média.</target>
+            </trans-unit>
+            <trans-unit id="user.media.not_found">
+                <source>user.media.not_found</source>
+                <target>Vous n'avez aucun média.</target>
             </trans-unit>
             <trans-unit id="user.media.photo.comment.created_successfully">
                 <source>user.media.photo.comment.created_successfully</source>
