@@ -41,7 +41,7 @@
             </trans-unit>
             <trans-unit id="label.user.media.photo">
                 <source>label.user.media.photo</source>
-                <target>Photo de « %username% »</target>
+                <target>Photo de @%username%</target>
             </trans-unit>
             <trans-unit id="label.your_comment">
                 <source>label.your_comment</source>
