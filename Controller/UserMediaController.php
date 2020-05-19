@@ -5,6 +5,8 @@ namespace GaylordP\UserMediaBundle\Controller;
 use App\Entity\UserMedia;
 use App\Form\UserMediaType;
 use GaylordP\UploadBundle\Util\IsImage;
+use GaylordP\UserMediaBundle\Entity\UserMediaComment;
+use GaylordP\UserMediaBundle\Entity\UserMediaLike;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -86,6 +88,20 @@ class UserMediaController extends AbstractController
 
         if (null !== $this->getUser()->getUserMedia() && $this->getUser()->getUserMedia() === $userMedia) {
             $this->getUser()->setUserMedia(null);
+        }
+
+        $likes = $entityManager->getRepository(UserMediaLike::class)->findByUserMedia($userMedia);
+
+        foreach ($likes as $like) {
+            $like->setDeletedAt(new \DateTime());
+            $like->setDeletedBy($this->getUser());
+        }
+
+        $comments = $entityManager->getRepository(UserMediaComment::class)->findByUserMedia($userMedia);
+
+        foreach ($comments as $comment) {
+            $comment->setDeletedAt(new \DateTime());
+            $comment->setDeletedBy($this->getUser());
         }
 
         $entityManager->flush();
