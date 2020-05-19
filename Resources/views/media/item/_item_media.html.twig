@@ -1,3 +1,13 @@
+{% if width is not defined %}
+    {% set width = 600 %}
+{% endif %}
+{% if height is not defined %}
+    {% set height = 600 %}
+{% endif %}
+{% if resize is not defined %}
+    {% set resize = 'square' %}
+{% endif %}
+
 {% if user_media.media.isImage %}
     {% if resize is defined and false == resize %}
         <img src="/upload/{{ user_media.media.token }}/{{ user_media.media.name }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
@@ -7,7 +17,7 @@
             'user_media'
         ) }}">
     {% else %}
-        <img src="{{ media_resize(user_media.media, width ?? 600, height ?? 600, resize ?? 'square') }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
+        <img src="{{ media_resize(user_media.media, width, height, resize) }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
             {
                 '%username%': '@' ~ user_media.createdBy.username,
             },
@@ -15,10 +25,20 @@
         ) }}">
     {% endif %}
 {% else %}
-    <div class="embed-responsive embed-responsive-16by9">
-        <video controls class="video-js embed-responsive-item img-thumbnail">
-            <source src="/upload/{{ user_media.media.token }}/{{ user_media.media.name }}" type="{{ user_media.media.mime }}">
-            {{ 'video.browser.support'|trans({}, 'user_media') }}
-        </video>
-    </div>
+    {% if false == resize %}
+        <div class="embed-responsive embed-responsive-16by9">
+            <video controls class="video-js embed-responsive-item img-thumbnail">
+                <source src="/upload/{{ user_media.media.token }}/{{ user_media.media.name }}" type="{{ user_media.media.mime }}">
+                {{ 'video.browser.support'|trans({}, 'user_media') }}
+            </video>
+        </div>
+    {% else %}
+        <img src="{{ media_resize(user_media.media, width, height, resize) }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.video'|trans(
+            {
+                '%username%': '@' ~ user_media.createdBy.username,
+            },
+            'user_media'
+        ) }}">
+        <i class="fas fa-play-circle video-play"></i>
+    {% endif %}
 {% endif %}

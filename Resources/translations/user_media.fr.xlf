@@ -43,6 +43,10 @@
                 <source>label.user.media.photo</source>
                 <target>Photo de @%username%</target>
             </trans-unit>
+            <trans-unit id="label.user.media.video">
+                <source>label.user.media.video</source>
+                <target>Vidéo de @%username%</target>
+            </trans-unit>
             <trans-unit id="label.your_comment">
                 <source>label.your_comment</source>
                 <target>Votre commentaire</target>

@@ -1,5 +1,5 @@
 {% if user_media.media.videoTime %}
-    {{ ('<i class="fa fa-clock mr-1"></i> <span class="badge badge-light">' ~ user_media.media.videoTime|format_time('short') ~ '</span>')|label(
+    {{ ('<i class="fa fa-clock mr-1"></i> <span class="badge badge-light">' ~ user_media.media.videoTime|format_time('medium') ~ '</span>')|label(
         'secondary',
         null,
         false,
