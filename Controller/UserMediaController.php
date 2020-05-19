@@ -93,15 +93,15 @@ class UserMediaController extends AbstractController
         $likes = $entityManager->getRepository(UserMediaLike::class)->findByUserMedia($userMedia);
 
         foreach ($likes as $like) {
-            $like->setDeletedAt(new \DateTime());
-            $like->setDeletedBy($this->getUser());
+            $like->setDeletedAt($userMedia->getDeletedAt());
+            $like->setDeletedBy($userMedia->getDeletedBy());
         }
 
         $comments = $entityManager->getRepository(UserMediaComment::class)->findByUserMedia($userMedia);
 
         foreach ($comments as $comment) {
-            $comment->setDeletedAt(new \DateTime());
-            $comment->setDeletedBy($this->getUser());
+            $comment->setDeletedAt($userMedia->getDeletedAt());
+            $comment->setDeletedBy($userMedia->getDeletedBy());
         }
 
         $entityManager->flush();
