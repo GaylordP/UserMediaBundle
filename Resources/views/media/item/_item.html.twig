@@ -18,4 +18,17 @@
         },
         with_context = true
     ) }}
+    {% if
+        false == user_media.media.isImage
+            and
+        (
+            resize is defined and true == resize
+                or
+            resize is not defined
+        )
+    %}
+        <div class="control-video-play">
+            <i class="fas fa-play-circle"></i>
+        </div>
+    {% endif %}
 </div>

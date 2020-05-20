@@ -1,4 +1,5 @@
 .media-container {
+    min-height: 100px;
     display: flex;
 }
 
@@ -33,6 +34,20 @@
     margin-top: .25rem;
 }
 
+.media-container > div.control-video-play {
+    position: absolute;
+    z-index: 905;
+    top: 50%;
+    left: 50%;
+    margin-top: -24px;
+    margin-left: -24px;
+}
+
+.media-container > div.control-video-play > i {
+    color: #fff;
+    font-size: 48px;
+}
+
 .media-container > a.media-link {
     background-color: $gray-200;
     border: 1px solid $gray-300;
@@ -58,17 +73,6 @@
 .media-container > a.media-link:hover > img,
 .media-container > a.media-link:hover > div > video {
     border-color: $gray-600;
-}
-
-.media-container > a.media-link > i.video-play {
-    color: #fff;
-    position: absolute;
-    margin: -24px auto auto auto;
-    top: 50%;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    font-size: 48px;
 }
 
 .media-show > div:first-of-type {
