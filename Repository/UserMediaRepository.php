@@ -18,7 +18,7 @@ class UserMediaRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('userMedia')
             ->innerJoin('userMedia.media', 'media')
-            ->andWhere('media.token = :token')
+            ->andWhere('binary(media.token) = :token')
             ->setParameter('token', $token)
             ->select('
                 userMedia,

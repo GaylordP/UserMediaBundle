@@ -9,32 +9,13 @@
         ) }}
     </div>
     <div class="control-container media-control-container">
-        {% apply spaceless %}
-            {{ include('@User/button/_user.html.twig',
-                {
-                    'user': user_media.createdBy,
-                },
-                with_context = false
-            ) }}
-            {{ include('@User/button/_follow.html.twig',
-                {
-                    'user': user_media.createdBy,
-                },
-                with_context = false
-            ) }}
-            {{ include('@UserMedia/media/item/control/_like.html.twig',
-                {
-                    'user_media': user_media,
-                },
-                with_context = false
-            ) }}
-            {{ include('@UserMedia/media/item/control/_comment.html.twig',
-                {
-                    'user_media': user_media,
-                },
-                with_context = false
-            ) }}
-        {% endapply %}
+        {{ include('@UserMedia/media/item/_item_control.html.twig',
+            {
+                'user_media': user_media,
+                'resize': false,
+            },
+            with_context = false
+        ) }}
     </div>
     <h2>
         <i class="{{ include('@UserMedia/member/_comment_ico.html.twig', with_context = false) }}"></i>
