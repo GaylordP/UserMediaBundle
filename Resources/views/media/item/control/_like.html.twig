@@ -1,14 +1,14 @@
 {{ ('<i class="fas fa-heart mr-1"></i> <span class="badge badge-light">' ~ user_media.__countLike ~ '</span>')|button_link(
     path('user_media_like',
         {
-            '_token': user_media.media.token,
+            '_token': user_media.token,
         }
     ),
     false == user_media.__isUserLiked ? 'secondary' : 'red',
     null,
     false,
     {
-        'class': 'btn-sm user-media-like-' ~ user_media.media.token,
+        'class': 'btn-sm user-media-like-' ~ user_media.token,
         'data-toggle': 'tooltip',
         'title': ('action.user.media.' ~ (false == user_media.__isUserLiked ? 'like' : 'unlike'))|trans({}, 'user_media'),
         'data-front-common-ajax': 'true',

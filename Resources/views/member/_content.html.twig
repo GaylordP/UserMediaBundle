@@ -20,7 +20,7 @@
     <h2>
         <i class="{{ include('@UserMedia/member/_comment_ico.html.twig', with_context = false) }}"></i>
         {{ 'title.comments'|trans({}, 'user_media') }}
-        <span class="badge badge-blue" id="user-media-comment-title-{{ user_media.media.token }}">
+        <span class="badge badge-blue" id="user-media-comment-title-{{ user_media.token }}">
             {{ user_media_comments|length }}
         </span>
     </h2>

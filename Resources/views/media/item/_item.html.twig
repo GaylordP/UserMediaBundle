@@ -2,9 +2,9 @@
     <a class="media-link" href="{{ path('member_media',
         {
             'slug': user_media.createdBy.slug,
-            '_token': user_media.media.token,
+            '_token': user_media.token,
         }
-    ) }}" id="user-media-show-{{ user_media.media.token }}" data-front-common-ajax="true">
+    ) }}" id="user-media-show-{{ user_media.token }}" data-front-common-ajax="true">
         {{ include('@UserMedia/media/item/_item_media.html.twig',
             {
                 'user_media': user_media,

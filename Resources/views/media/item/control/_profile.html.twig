@@ -3,7 +3,7 @@
         {{ 'action.user.media.profile'|trans({}, 'user_media')|button_link(
             path('user_media_profile',
                 {
-                    '_token': user_media.media.token,
+                    '_token': user_media.token,
                 }
             ),
             '_edit_',
@@ -17,7 +17,7 @@
         {{ 'action.user.media.unprofile'|trans({}, 'user_media')|button_link(
             path('user_media_unprofile',
                 {
-                    '_token': user_media.media.token,
+                    '_token': user_media.token,
                 }
             ),
             '_edit_',

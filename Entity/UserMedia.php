@@ -41,6 +41,13 @@ class UserMedia
     protected $media;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $token;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -87,6 +94,26 @@ class UserMedia
     public function setMedia(?Media $media): void
     {
         $this->media = $media;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
     }
 
     /**

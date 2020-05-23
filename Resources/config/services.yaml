@@ -1,9 +1,20 @@
+parameters:
+    user_media_hashids_salt: '%env(USER_MEDIA_HASHIDS_SALT)%'
+
 services:
     GaylordP\UserMediaBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
         autoconfigure: true
         autowire: true
+
+    GaylordP\UserMediaBundle\EventListener\UserMediaListener:
+        arguments:
+            - '%user_media_hashids_salt%'
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'postPersist'
 
     GaylordP\UserMediaBundle\Provider\UserMediaProvider:
         arguments:

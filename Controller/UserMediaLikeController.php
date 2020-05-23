@@ -79,7 +79,7 @@ class UserMediaLikeController extends AbstractController
 
             return new JsonResponse([
                 'action' => 'replace',
-                'target' => '.user-media-like-' . $userMedia->getMedia()->getToken(),
+                'target' => '.user-media-like-' . $userMedia->getToken(),
                 'html' => $this->renderView('@UserMedia/media/item/control/_like.html.twig', [
                     'user_media' => $userMedia,
                 ])

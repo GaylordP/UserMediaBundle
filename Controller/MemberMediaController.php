@@ -75,12 +75,12 @@ class MemberMediaController extends AbstractController
                     ],
                     [
                         'action' => 'html',
-                        'target' => '.user-media-comment-' . $userMedia->getMedia()->getToken() . ' > .badge',
+                        'target' => '.user-media-comment-' . $userMedia->getToken() . ' > .badge',
                         'html' => $userMedia->__countComment,
                     ],
                     [
                         'action' => 'html',
-                        'target' => '#user-media-comment-title-' . $userMedia->getMedia()->getToken(),
+                        'target' => '#user-media-comment-title-' . $userMedia->getToken(),
                         'html' => $userMedia->__countComment,
                     ],
                 ], Response::HTTP_PARTIAL_CONTENT);
@@ -96,7 +96,7 @@ class MemberMediaController extends AbstractController
 
                 return $this->redirectToRoute('member_media', [
                     'slug' => $userMedia->getCreatedBy()->getSlug(),
-                    '_token' => $userMedia->getMedia()->getToken(),
+                    '_token' => $userMedia->getToken(),
                 ]);
             }
         }
