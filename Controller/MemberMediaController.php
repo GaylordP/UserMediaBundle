@@ -63,6 +63,10 @@ class MemberMediaController extends AbstractController
 
                 return new JsonResponse([
                     [
+                        'action' => 'remove',
+                        'target' => '.user-media-no-comment',
+                    ],
+                    [
                         'action' => 'append',
                         'target' => '.comments',
                         'html' => $this->renderView('@UserMedia/member/_comment.html.twig', [
