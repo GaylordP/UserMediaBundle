@@ -1,19 +1,10 @@
 {% if user_media.media.isImage %}
-    {% if resize is defined and false == resize %}
-        <img src="/upload/{{ user_media.media.uuid }}/{{ user_media.media.name }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
-            {
-                '%username%': '@' ~ user_media.createdBy.username,
-            },
-            'user_media'
-        ) }}">
-    {% else %}
-        <img src="{{ media_resize(user_media.media, width ?? 600, height ?? 600, resize ?? 'square') }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
-            {
-                '%username%': '@' ~ user_media.createdBy.username,
-            },
-            'user_media'
-        ) }}">
-    {% endif %}
+    <img src="{{ media_resize(user_media.media, width ?? 600, height ?? 600, resize ?? 'square') }}" class="img-fluid img-thumbnail" alt="{{ 'label.user.media.photo'|trans(
+        {
+            '%username%': '@' ~ user_media.createdBy.username,
+        },
+        'user_media'
+    ) }}">
 {% else %}
     {% if resize is defined and false == resize %}
         <div class="embed-responsive embed-responsive-16by9">
