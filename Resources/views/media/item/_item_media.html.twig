@@ -8,7 +8,7 @@
 {% else %}
     {% if resize is defined and false == resize %}
         <div class="embed-responsive embed-responsive-16by9">
-            <video controls class="video-js embed-responsive-item img-thumbnail">
+            <video controls class="embed-responsive-item img-thumbnail">
                 <source src="/upload/{{ user_media.media.uuid }}/{{ user_media.media.name }}" type="{{ user_media.media.mime }}">
                 {{ 'video.browser.support'|trans({}, 'user_media') }}
             </video>
