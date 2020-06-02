@@ -33,7 +33,7 @@
                 with_context = false
             ) }}
         {% else %}
-            <div class="alert alert-danger user-media-no-comment{% if user_media_comments is not empty %} mb-0{% endif %}">
+            <div class="alert alert-danger user-media-no-comment">
                 <p class="mb-0">
                     {{ ('user.media.' ~ (user_media.media.mime is image ? 'photo' : 'video') ~ '.comment.login_required')|trans({}, 'user_media') }}
                 </p>
