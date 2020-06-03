@@ -59,7 +59,7 @@ class MemberMediaController extends AbstractController
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
-                $userMediaProvider->addExtraInfos($userMedia, true, true);
+                $userMediaProvider->addExtraInfos($userMedia);
 
                 return new JsonResponse([
                     [
@@ -74,14 +74,14 @@ class MemberMediaController extends AbstractController
                         ]),
                     ],
                     [
-                        'action' => 'html',
+                        'action' => 'text',
                         'target' => '.user-media-comment-' . $userMedia->getToken() . ' > .badge',
-                        'html' => $userMedia->__countComment,
+                        'text' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
                     ],
                     [
-                        'action' => 'html',
+                        'action' => 'text',
                         'target' => '#user-media-comment-title-' . $userMedia->getToken(),
-                        'html' => $userMedia->__countComment,
+                        'text' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
                     ],
                 ], Response::HTTP_PARTIAL_CONTENT);
             } else {
@@ -110,14 +110,9 @@ class MemberMediaController extends AbstractController
 
         $userMedia->{UserMediaProvider::COUNT_COMMENT} = count($userMediaComments);
 
-        $userMediaProvider->addExtraInfos($userMedia,
-            true,
-            false
-        );
+        $userMediaProvider->addExtraInfos($userMedia);
 
-        $userProvider->addExtraInfos($userMedia->getCreatedBy(),
-            true
-        );
+        $userProvider->addExtraInfos($userMedia->getCreatedBy());
 
         if ($request->isXmlHttpRequest()) {
             if ($form->isSubmitted()) {
@@ -129,7 +124,7 @@ class MemberMediaController extends AbstractController
                     ]),
                 ], Response::HTTP_PARTIAL_CONTENT);
             } else {
-                $userProvider->addExtraInfos($member, true);
+                $userProvider->addExtraInfos($member);
 
                 return new JsonResponse([
                     'action' => 'show-modal',

@@ -27,64 +27,80 @@ class UserMediaProvider
         $this->userMediaCommentRepository = $userMediaCommentRepository;
     }
 
-    public function addExtraInfos(
-        $userMedia,
-        bool $countLikeAndisUserLiked = false,
-        bool $countComment = false
-    ) {
-        $ids = [];
+    public function addExtraInfos($userMedia)
+    {
         $listEntitiesById = [];
 
         if ($userMedia instanceof UserMedia) {
             $listEntitiesById[$userMedia->getId()] = $userMedia;
-            $ids[] = $userMedia->getId();
         } elseif (is_array($userMedia) && current($userMedia) instanceof UserMedia) {
-            $ids = array_map(function($e) use(&$listEntitiesById) {
+            array_map(function($e) use(&$listEntitiesById) {
                 $listEntitiesById[$e->getId()] = $e;
-
-                return $e->getId();
             }, $userMedia);
         }
 
-        if (!empty($ids)) {
-            if (true === $countLikeAndisUserLiked) {
-                $likes = $this->userMediaLikeRepository->countByUserMediaId($ids);
-
-                foreach ($likes as $like) {
-                    $listEntitiesById[$like['user_media_id']]->{self::COUNT_LIKE} = $like['count_like'];
+        if (!empty($listEntitiesById)) {
+            /*
+             * Like
+             */
+            $likesIds = array_map(function($e) {
+                if (false === property_exists($e, self::COUNT_LIKE)) {
+                    return $e->getId();
                 }
+            }, $listEntitiesById);
 
-                if (null !== $this->security->getUser()) {
-                    $userLikes = $this->userMediaLikeRepository->getUserLikedByUserMediaId($this->security->getUser(), $ids);
+            $likes = $this->userMediaLikeRepository->countByUserMediaId($likesIds);
 
-                    foreach ($userLikes as $userLike) {
-                        $listEntitiesById[$userLike['user_media_id']]->{self::IS_USER_LIKED} = true;
+            foreach ($likes as $like) {
+                $listEntitiesById[$like['user_media_id']]->{self::COUNT_LIKE} = $like['count_like'];
+            }
+
+            /*
+             * User like
+             */
+            if (null !== $this->security->getUser()) {
+                $userLikesIds = array_map(function($e) {
+                    if (false === property_exists($e, self::IS_USER_LIKED)) {
+                        return $e->getId();
                     }
+                }, $listEntitiesById);
+
+                $userLikes = $this->userMediaLikeRepository->getUserLikedByUserMediaId($this->security->getUser(), $userLikesIds);
+
+                foreach ($userLikes as $userLike) {
+                    $listEntitiesById[$userLike['user_media_id']]->{self::IS_USER_LIKED} = true;
                 }
             }
 
-            if (true === $countComment) {
-                $comments = $this->userMediaCommentRepository->countByUserMediaId($ids);
-
-                foreach ($comments as $comment) {
-                    $listEntitiesById[$comment['user_media_id']]->{self::COUNT_COMMENT} = $comment['count_comment'];
+            /*
+             * Comments
+             */
+            $commentsIds = array_map(function($e) {
+                if (false === property_exists($e, self::COUNT_COMMENT)) {
+                    return $e->getId();
                 }
+            }, $listEntitiesById);
+
+            $comments = $this->userMediaCommentRepository->countByUserMediaId($commentsIds);
+
+            foreach ($comments as $comment) {
+                $listEntitiesById[$comment['user_media_id']]->{self::COUNT_COMMENT} = $comment['count_comment'];
             }
 
+            /*
+             * Default
+             */
             foreach ($listEntitiesById as $entity) {
-                if (true === $countLikeAndisUserLiked) {
-                    if (false === property_exists($entity, self::COUNT_LIKE)) {
-                        $entity->{self::COUNT_LIKE} = 0;
-                    }
-                    if (false === property_exists($entity, self::IS_USER_LIKED)) {
-                        $entity->{self::IS_USER_LIKED} = false;
-                    }
+                if (false === property_exists($entity, self::COUNT_LIKE)) {
+                    $entity->{self::COUNT_LIKE} = 0;
                 }
 
-                if (true === $countComment) {
-                    if (false === property_exists($entity, self::COUNT_COMMENT)) {
-                        $entity->{self::COUNT_COMMENT} = 0;
-                    }
+                if (false === property_exists($entity, self::IS_USER_LIKED)) {
+                    $entity->{self::IS_USER_LIKED} = false;
+                }
+
+                if (false === property_exists($entity, self::COUNT_COMMENT)) {
+                    $entity->{self::COUNT_COMMENT} = 0;
                 }
             }
         }

@@ -75,7 +75,7 @@ class UserMediaLikeController extends AbstractController
         }
 
         if ($request->isXmlHttpRequest()) {
-            $userMediaProvider->addExtraInfos($userMedia, true, true);
+            $userMediaProvider->addExtraInfos($userMedia);
 
             return new JsonResponse([
                 'action' => 'replace',
