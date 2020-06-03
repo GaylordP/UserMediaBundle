@@ -13,9 +13,9 @@ class UserMediaProvider
     const COUNT_LIKE = '__countLike';
     const IS_USER_LIKED = '__isUserLiked';
 
-    private $security;
-    private $userMediaLikeRepository;
-    private $userMediaCommentRepository;
+    protected $security;
+    protected $userMediaLikeRepository;
+    protected $userMediaCommentRepository;
 
     public function __construct(
         Security $security,
