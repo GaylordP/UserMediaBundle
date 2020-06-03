@@ -33,7 +33,6 @@ class UserMediaLike
      *
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\UserMedia",
-     *     cascade={"persist"},
      *     fetch="EAGER"
      * )
      * @Assert\NotBlank()
@@ -51,7 +50,10 @@ class UserMediaLike
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\User",
+     *     fetch="EAGER"
+     * )
      * @CreatedBy
      */
     private $createdBy;

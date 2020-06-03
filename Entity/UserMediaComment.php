@@ -32,7 +32,6 @@ class UserMediaComment
      *
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\UserMedia",
-     *     cascade={"persist"},
      *     fetch="EAGER"
      * )
      * @Assert\NotBlank()

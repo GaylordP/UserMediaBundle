@@ -21,7 +21,7 @@ class UserMediaLikeRepository extends ServiceEntityRepository
             ->andWhere('userMediaLike.userMedia IN(:userMediaIds)')
             ->setParameter('userMediaIds', $userMediaIds)
             ->select('
-                IDENTITY(userMediaLike.userMedia) user_media_id,
+                IDENTITY(userMediaLike.userMedia) AS user_media_id,
                 COUNT(userMediaLike) AS count_like
             ')
             ->groupBy('userMediaLike.userMedia')
@@ -39,7 +39,7 @@ class UserMediaLikeRepository extends ServiceEntityRepository
             ->andWhere('userMediaLike.userMedia IN(:userMediaIds)')
             ->setParameter('userMediaIds', $userMediaIds)
             ->select('
-                IDENTITY(userMediaLike.userMedia) user_media_id
+                IDENTITY(userMediaLike.userMedia) AS user_media_id
             ')
             ->getQuery()
             ->getResult()
