@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use GaylordP\UserBundle\Annotation\CreatedAt;
 use GaylordP\UserBundle\Annotation\CreatedBy;
 use GaylordP\UserBundle\Entity\Traits\Deletable;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -43,6 +44,7 @@ class UserMediaComment
      *
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
+     * @Groups({"user_media_comment_read"})
      */
     private $content;
 
@@ -51,6 +53,7 @@ class UserMediaComment
      *
      * @ORM\Column(type="datetime")
      * @CreatedAt
+     * @Groups({"user_media_comment_read"})
      */
     private $createdAt;
 
@@ -62,6 +65,7 @@ class UserMediaComment
      *     fetch="EAGER"
      * )
      * @CreatedBy
+     * @Groups({"user_media_comment_read"})
      */
     private $createdBy;
 

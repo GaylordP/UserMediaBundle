@@ -3,8 +3,9 @@
     null,
     false,
     {
-        'class': 'label-sm user-media-comment-' ~ user_media.token,
+        'class': 'label-sm user-media-comment',
         'data-toggle': 'tooltip',
         'title': 'label.count_comment'|trans({}, 'user_media'),
+        'data-user-media-token': user_media.token,
     }
 ) }}

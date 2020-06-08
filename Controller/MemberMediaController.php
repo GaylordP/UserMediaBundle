@@ -14,7 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MemberMediaController extends AbstractController
 {
@@ -39,7 +42,9 @@ class MemberMediaController extends AbstractController
         User $member,
         UserMedia $userMedia,
         UserMediaProvider $userMediaProvider,
-        UserProvider $userProvider
+        UserProvider $userProvider,
+        PublisherInterface $publisher,
+        NormalizerInterface $normalizer
     ): Response {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -61,29 +66,22 @@ class MemberMediaController extends AbstractController
             if ($request->isXmlHttpRequest()) {
                 $userMediaProvider->addExtraInfos($userMedia);
 
-                return new JsonResponse([
-                    [
-                        'action' => 'remove',
-                        'target' => '.user-media-no-comment',
-                    ],
-                    [
-                        'action' => 'append',
-                        'target' => '.comments',
-                        'html' => $this->renderView('@UserMedia/member/_comment.html.twig', [
+                $update = new Update(
+                    'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/comment',
+                    json_encode([
+                        'token' => $userMedia->getToken(),
+                        'count' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
+                        'commentHtml' => $this->renderView('@UserMedia/member/_comment.html.twig', [
                             'comment' => $userMediaComment,
-                        ]),
-                    ],
-                    [
-                        'action' => 'text',
-                        'target' => '.user-media-comment-' . $userMedia->getToken() . ' > .badge',
-                        'text' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
-                    ],
-                    [
-                        'action' => 'text',
-                        'target' => '#user-media-comment-title-' . $userMedia->getToken(),
-                        'text' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
-                    ],
-                ], Response::HTTP_PARTIAL_CONTENT);
+                        ])
+                    ]),
+                    false,
+                    null,
+                    'user_media_comment'
+                );
+                $publisher($update);
+
+                return new JsonResponse(null, Response::HTTP_OK);
             } else {
                 $this->get('session')->getFlashBag()->add(
                     'success',

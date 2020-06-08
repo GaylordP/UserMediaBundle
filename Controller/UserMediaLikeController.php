@@ -5,13 +5,17 @@ namespace GaylordP\UserMediaBundle\Controller;
 use App\Entity\UserMedia;
 use GaylordP\UserMediaBundle\Entity\UserMediaLike;
 use GaylordP\UserMediaBundle\Provider\UserMediaProvider;
+use GaylordP\UserBundle\Entity\UserNotification;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserMediaLikeController extends AbstractController
 {
@@ -29,7 +33,9 @@ class UserMediaLikeController extends AbstractController
         Request $request,
         RouterInterface $router,
         UserMedia $userMedia,
-        UserMediaProvider $userMediaProvider
+        UserMediaProvider $userMediaProvider,
+        PublisherInterface $publisher,
+        TranslatorInterface $translator
     ): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -59,7 +65,28 @@ class UserMediaLikeController extends AbstractController
             $userMediaLike = new UserMediaLike();
             $userMediaLike->setUserMedia($userMedia);
 
+            /*
+            $update = new Update(
+                'https://bubble.lgbt/user/' . $userMedia->getCreatedBy()->getId(),
+                json_encode([
+                    'type' => 'user_notification',
+                    'subtype' => 'user_media_like',
+                ]),
+                true
+            );
+            $publisher($update);
+            */
+
             $entityManager->persist($userMediaLike);
+            $entityManager->flush();
+
+
+            $userNotification = new UserNotification();
+            $userNotification->setUser($userMedia->getCreatedBy());
+            $userNotification->setType('user_media_like');
+            $userNotification->setElementId($userMediaLike->getId());
+
+            $entityManager->persist($userNotification);
             $entityManager->flush();
 
             if (!$request->isXmlHttpRequest()) {
@@ -77,13 +104,32 @@ class UserMediaLikeController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             $userMediaProvider->addExtraInfos($userMedia);
 
-            return new JsonResponse([
-                'action' => 'replace',
-                'target' => '.user-media-like-' . $userMedia->getToken(),
-                'html' => $this->renderView('@UserMedia/media/item/control/_like.html.twig', [
-                    'user_media' => $userMedia,
-                ])
-            ], Response::HTTP_PARTIAL_CONTENT);
+            $update = new Update(
+                'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/like',
+                json_encode([
+                    'token' => $userMedia->getToken(),
+                    'count' => $userMedia->{UserMediaProvider::COUNT_LIKE},
+                ]),
+                false,
+                null,
+                'user_media_like'
+            );
+            $publisher($update);
+
+            $update = new Update(
+                'https://bubble.lgbt/user/' . $this->getUser()->getSlug(),
+                json_encode([
+                    'token' => $userMedia->getToken(),
+                    'isLiked' => null !== $findLike ? false : true,
+                    'title' => null !== $findLike ? $translator->trans('action.user.media.like', [], 'user_media') : $translator->trans('action.user.media.unlike', [], 'user_media'),
+                ]),
+                true,
+                null,
+                'user_media_like_click'
+            );
+            $publisher($update);
+
+            return new JsonResponse(null, Response::HTTP_OK);
         } else {
             if (
                 null !== $request->headers->get('referer')
