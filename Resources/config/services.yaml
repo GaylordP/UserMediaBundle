@@ -40,3 +40,10 @@ services:
             - '%user_media%'
         tags:
             - 'twig.extension'
+
+    GaylordP\UserMediaBundle\UserNotificationFormat\UserMediaNotificationFormat:
+        arguments:
+            - '@translator'
+            - '@GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository'
+        tags:
+            - 'user.notification_format'
