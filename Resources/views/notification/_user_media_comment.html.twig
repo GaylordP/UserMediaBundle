@@ -1,0 +1,23 @@
+{{ include('@UserMedia/media/item/_item_media.html.twig',
+    {
+        'user_media': comment.userMedia,
+        'resize': 'square',
+        'width': 35,
+        'height': 35,
+    },
+    with_context = false
+) }}
+<span>
+    {{ ('user.notification.user.media.' ~ (true == comment.userMedia.media.isImage ? 'photo' : 'video') ~ '.comment' ~ (comment.userMedia.createdBy == comment.createdBy ? '.my'))|trans(
+        {
+            '%username%': include('@User/button/_user.html.twig',
+                {
+                    'remove_link': true,
+                    'user': comment.createdBy,
+                },
+                with_context = false
+            )
+        },
+        'user_media'
+    )|raw }}
+</span>

@@ -155,6 +155,39 @@
                 <target>Il n'y a aucun commentaire sur cette vidéo.</target>
             </trans-unit>
 
+            <trans-unit id="user.notification.user.media.photo.comment">
+                <source>user.notification.user.media.photo.comment</source>
+                <target>%username% a commenté votre photo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.photo.comment.my">
+                <source>user.notification.user.media.photo.comment.my</source>
+                <target>Vous avez commenté votre photo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.video.comment">
+                <source>user.notification.user.media.video.comment</source>
+                <target>%username% a commenté votre vidéo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.video.comment.my">
+                <source>user.notification.user.media.video.comment.my</source>
+                <target>Vous avez commenté votre vidéo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.photo.like">
+                <source>user.notification.user.media.photo.like</source>
+                <target>%username% a aimé votre photo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.photo.like.my">
+                <source>user.notification.user.media.photo.like.my</source>
+                <target>Vous avez aimé votre photo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.video.like">
+                <source>user.notification.user.media.video.like</source>
+                <target>%username% a aimé votre vidéo.</target>
+            </trans-unit>
+            <trans-unit id="user.notification.user.media.video.like.my">
+                <source>user.notification.user.media.video.like.my</source>
+                <target>Vous avez aimé votre vidéo.</target>
+            </trans-unit>
+
             <trans-unit id="video.browser.support">
                 <source>video.browser.support</source>
                 <target><![CDATA[Votre navigateur ne supporte pas les vidéos. Veuillez nous contacter si le problème persiste.]]></target>

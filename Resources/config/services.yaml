@@ -43,7 +43,9 @@ services:
 
     GaylordP\UserMediaBundle\UserNotificationFormat\UserMediaNotificationFormat:
         arguments:
-            - '@translator'
+            - '@twig'
+            - '@router'
+            - '@GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository'
             - '@GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository'
         tags:
             - 'user.notification_format'

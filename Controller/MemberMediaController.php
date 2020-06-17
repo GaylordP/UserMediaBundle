@@ -4,6 +4,7 @@ namespace GaylordP\UserMediaBundle\Controller;
 
 use App\Entity\User;
 use App\Entity\UserMedia;
+use GaylordP\UserBundle\Entity\UserNotification;
 use GaylordP\UserMediaBundle\Entity\UserMediaComment;
 use GaylordP\UserMediaBundle\Form\UserMediaCommentType;
 use GaylordP\UserBundle\Provider\UserProvider;
@@ -54,13 +55,20 @@ class MemberMediaController extends AbstractController
         $form = $this->createForm(UserMediaCommentType::class, $userMediaComment, [
             'attr' => [
                 'action' => $request->getRequestUri(),
-                'data-form-ajax' => 'true',
             ]
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($userMediaComment);
+            $entityManager->flush();
+
+            $userNotification = new UserNotification();
+            $userNotification->setUser($userMedia->getCreatedBy());
+            $userNotification->setType('user_media_comment');
+            $userNotification->setElementId($userMediaComment->getId());
+
+            $entityManager->persist($userNotification);
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
@@ -81,7 +89,9 @@ class MemberMediaController extends AbstractController
                 );
                 $publisher($update);
 
-                return new JsonResponse(null, Response::HTTP_OK);
+                return new JsonResponse([
+                    'status' => 'success',
+                ], Response::HTTP_OK);
             } else {
                 $this->get('session')->getFlashBag()->add(
                     'success',
@@ -115,12 +125,11 @@ class MemberMediaController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             if ($form->isSubmitted()) {
                 return new JsonResponse([
-                    'action' => 'replace',
-                    'target' => '.comments > form',
-                    'html' => $this->renderView('@UserMedia/member/_comment_form.html.twig', [
+                    'status' => 'form_error',
+                    'formHtml' => $this->renderView('@UserMedia/member/_comment_form.html.twig', [
                         'form' => $form->createView(),
                     ]),
-                ], Response::HTTP_PARTIAL_CONTENT);
+                ], Response::HTTP_OK);
             } else {
                 $userProvider->addExtraInfos($member);
 
@@ -134,7 +143,7 @@ class MemberMediaController extends AbstractController
                         'user_media_comments' => $userMediaComments,
                         'form' => $form->createView(),
                     ])
-                ], Response::HTTP_PARTIAL_CONTENT);
+                ], Response::HTTP_OK);
             }
         } else {
             return $this->render('@UserMedia/member/media.html.twig', [

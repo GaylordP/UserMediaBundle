@@ -5,7 +5,6 @@ export const FindElement = (url) => {
         let token = element.getAttribute('data-user-media-token')
 
         url.searchParams.append('topic', 'https://bubble.lgbt/user-media/' + token + '/like')
-        url.searchParams.append('topic', 'https://bubble.lgbt/user/1211aol-fr')
     })
 }
 

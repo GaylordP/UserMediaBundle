@@ -5,6 +5,7 @@ namespace GaylordP\UserMediaBundle\Controller;
 use App\Entity\UserMedia;
 use App\Form\UserMediaType;
 use GaylordP\UploadBundle\Util\IsImage;
+use GaylordP\UserBundle\Entity\UserNotification;
 use GaylordP\UserMediaBundle\Entity\UserMediaComment;
 use GaylordP\UserMediaBundle\Entity\UserMediaLike;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -95,6 +96,14 @@ class UserMediaController extends AbstractController
         foreach ($likes as $like) {
             $like->setDeletedAt($userMedia->getDeletedAt());
             $like->setDeletedBy($userMedia->getDeletedBy());
+
+            $notification = $entityManager->getRepository(UserNotification::class)->findOneBy([
+                'type' => 'user_media_like',
+                'elementId' => $like->getId(),
+            ]);
+
+            $notification->setDeletedAt($userMedia->getDeletedAt());
+            $notification->setDeletedBy($userMedia->getDeletedBy());
         }
 
         $comments = $entityManager->getRepository(UserMediaComment::class)->findByUserMedia($userMedia);
@@ -102,6 +111,14 @@ class UserMediaController extends AbstractController
         foreach ($comments as $comment) {
             $comment->setDeletedAt($userMedia->getDeletedAt());
             $comment->setDeletedBy($userMedia->getDeletedBy());
+
+            $notification = $entityManager->getRepository(UserNotification::class)->findOneBy([
+                'type' => 'user_media_comment',
+                'elementId' => $comment->getId(),
+            ]);
+
+            $notification->setDeletedAt($userMedia->getDeletedAt());
+            $notification->setDeletedBy($userMedia->getDeletedBy());
         }
 
         $entityManager->flush();

@@ -30,7 +30,9 @@ export const EventSourceListener = (eventSource) => {
             titleBadge.innerText = data.count
 
             let commentsContainer = show.querySelector('.comments')
-            commentsContainer.innerHTML += data.commentHtml
+            let commentHtml = document.createElement('div')
+            commentHtml.innerHTML = data.commentHtml
+            commentsContainer.appendChild(commentHtml.firstChild)
         }
     }, false)
 }

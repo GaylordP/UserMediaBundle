@@ -49,6 +49,14 @@ class UserMediaLikeController extends AbstractController
             $findLike->setDeletedBy($this->getUser());
             $findLike->setDeletedAt(new \DateTime());
 
+            $notification = $entityManager->getRepository(UserNotification::class)->findOneBy([
+                'type' => 'user_media_like',
+                'elementId' => $findLike->getId(),
+            ]);
+
+            $notification->setDeletedBy($findLike->getDeletedBy());
+            $notification->setDeletedAt($findLike->getDeletedAt());
+
             $entityManager->flush();
 
             if (!$request->isXmlHttpRequest()) {
@@ -65,21 +73,8 @@ class UserMediaLikeController extends AbstractController
             $userMediaLike = new UserMediaLike();
             $userMediaLike->setUserMedia($userMedia);
 
-            /*
-            $update = new Update(
-                'https://bubble.lgbt/user/' . $userMedia->getCreatedBy()->getId(),
-                json_encode([
-                    'type' => 'user_notification',
-                    'subtype' => 'user_media_like',
-                ]),
-                true
-            );
-            $publisher($update);
-            */
-
             $entityManager->persist($userMediaLike);
             $entityManager->flush();
-
 
             $userNotification = new UserNotification();
             $userNotification->setUser($userMedia->getCreatedBy());
