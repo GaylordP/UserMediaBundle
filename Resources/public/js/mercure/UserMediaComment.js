@@ -1,7 +1,7 @@
 export const FindElement = (url) => {
     let elements = document.querySelectorAll('.user-media-comment')
 
-    elements.forEach(function(element) {
+    elements.forEach((element) => {
         let token = element.getAttribute('data-user-media-token')
 
         url.searchParams.append('topic', 'https://bubble.lgbt/user-media/' + token + '/comment')
@@ -9,11 +9,11 @@ export const FindElement = (url) => {
 }
 
 export const EventSourceListener = (eventSource) => {
-    eventSource.addEventListener('user_media_comment', function(e) {
+    eventSource.addEventListener('user_media_comment', (e) => {
         let data = JSON.parse(e.data)
         let elements = document.querySelectorAll('.user-media-comment[data-user-media-token="' + data.token + '"]')
 
-        elements.forEach(function(element) {
+        elements.forEach((element) => {
             let badge = element.querySelector('.badge')
             badge.innerText = data.count
         })

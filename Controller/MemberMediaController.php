@@ -134,7 +134,6 @@ class MemberMediaController extends AbstractController
                 $userProvider->addExtraInfos($member);
 
                 return new JsonResponse([
-                    'action' => 'show-modal',
                     'title' => $this->renderView('@UserMedia/member/_title.html.twig', [
                         'user_media' => $userMedia,
                     ]),
