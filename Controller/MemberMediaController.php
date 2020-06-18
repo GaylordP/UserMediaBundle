@@ -44,8 +44,7 @@ class MemberMediaController extends AbstractController
         UserMedia $userMedia,
         UserMediaProvider $userMediaProvider,
         UserProvider $userProvider,
-        PublisherInterface $publisher,
-        NormalizerInterface $normalizer
+        PublisherInterface $publisher
     ): Response {
         $entityManager = $this->getDoctrine()->getManager();
 
