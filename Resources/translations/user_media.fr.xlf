@@ -88,7 +88,7 @@
 
             <trans-unit id="user.media.delete.profile">
                 <source>user.media.delete.profile</source>
-                <target>Attention, il s'agit de photo de profil : celle-ci sera supprimée.</target>
+                <target>Attention, il s'agit de votre photo de profil : celle-ci sera supprimée.</target>
             </trans-unit>
             <trans-unit id="user.media.deleted_successfully">
                 <source>user.media.deleted_successfully</source>
