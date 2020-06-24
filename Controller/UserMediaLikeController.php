@@ -96,33 +96,34 @@ class UserMediaLikeController extends AbstractController
             }
         }
 
+        $userMediaProvider->addExtraInfos($userMedia);
+
+        $update = new Update(
+            'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/like',
+            json_encode([
+                'token' => $userMedia->getToken(),
+                'count' => $userMedia->{UserMediaProvider::COUNT_LIKE},
+            ]),
+            false,
+            null,
+            'user_media_like'
+        );
+        $publisher($update);
+
+        $update = new Update(
+            'https://bubble.lgbt/user/' . $this->getUser()->getSlug(),
+            json_encode([
+                'token' => $userMedia->getToken(),
+                'isLiked' => null !== $findLike ? false : true,
+                'title' => null !== $findLike ? $translator->trans('action.user.media.like', [], 'user_media') : $translator->trans('action.user.media.unlike', [], 'user_media'),
+            ]),
+            true,
+            null,
+            'user_media_like_click'
+        );
+        $publisher($update);
+
         if ($request->isXmlHttpRequest()) {
-            $userMediaProvider->addExtraInfos($userMedia);
-
-            $update = new Update(
-                'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/like',
-                json_encode([
-                    'token' => $userMedia->getToken(),
-                    'count' => $userMedia->{UserMediaProvider::COUNT_LIKE},
-                ]),
-                false,
-                null,
-                'user_media_like'
-            );
-            $publisher($update);
-
-            $update = new Update(
-                'https://bubble.lgbt/user/' . $this->getUser()->getSlug(),
-                json_encode([
-                    'token' => $userMedia->getToken(),
-                    'isLiked' => null !== $findLike ? false : true,
-                    'title' => null !== $findLike ? $translator->trans('action.user.media.like', [], 'user_media') : $translator->trans('action.user.media.unlike', [], 'user_media'),
-                ]),
-                true,
-                null,
-                'user_media_like_click'
-            );
-            $publisher($update);
 
             return new JsonResponse(null, Response::HTTP_OK);
         } else {

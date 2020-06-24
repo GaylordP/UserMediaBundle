@@ -70,24 +70,24 @@ class MemberMediaController extends AbstractController
             $entityManager->persist($userNotification);
             $entityManager->flush();
 
+            $userMediaProvider->addExtraInfos($userMedia);
+
+            $update = new Update(
+                'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/comment',
+                json_encode([
+                    'token' => $userMedia->getToken(),
+                    'count' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
+                    'commentHtml' => $this->renderView('@UserMedia/member/_comment.html.twig', [
+                        'comment' => $userMediaComment,
+                    ])
+                ]),
+                false,
+                null,
+                'user_media_comment'
+            );
+            $publisher($update);
+
             if ($request->isXmlHttpRequest()) {
-                $userMediaProvider->addExtraInfos($userMedia);
-
-                $update = new Update(
-                    'https://bubble.lgbt/user-media/' . $userMedia->getToken() . '/comment',
-                    json_encode([
-                        'token' => $userMedia->getToken(),
-                        'count' => $userMedia->{UserMediaProvider::COUNT_COMMENT},
-                        'commentHtml' => $this->renderView('@UserMedia/member/_comment.html.twig', [
-                            'comment' => $userMediaComment,
-                        ])
-                    ]),
-                    false,
-                    null,
-                    'user_media_comment'
-                );
-                $publisher($update);
-
                 return new JsonResponse([
                     'status' => 'success',
                 ], Response::HTTP_OK);
