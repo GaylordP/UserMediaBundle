@@ -22,6 +22,12 @@ services:
             - '@GaylordP\UserMediaBundle\Repository\UserMediaLikeRepository'
             - '@GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository'
 
+    GaylordP\UserMediaBundle\Repository\UserMediaRepository:
+        arguments:
+            - '@doctrine'
+        tags:
+            - 'doctrine.repository_service'
+
     GaylordP\UserMediaBundle\Repository\UserMediaCommentRepository:
         arguments:
             - '@doctrine'
