@@ -1,4 +1,4 @@
-<div class="media-container col-6 col-md-4 col-lg-3" data-paginator-item-id="{{ user_media.token }}">
+<div class="media-container{% if col is defined %} {{ col }}{% else %} col-6 col-md-4 col-lg-3{% endif %}" data-paginator-item-id="{{ user_media.token }}">
     <a class="media-link user-media-show" href="{{ path('member_media',
         {
             'slug': user_media.createdBy.slug,
