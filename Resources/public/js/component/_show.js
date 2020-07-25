@@ -1,16 +1,14 @@
-import $ from "jquery";
+import $ from 'jquery'
 
 $(document).ready(() => {
-    let shows = document.querySelectorAll('.user-media-show')
+    document.onclick = (e) => {
+        let show = e.target.closest('.user-media-show')
 
-    shows.forEach((element) => {
-        let _this = element
-
-        element.onclick = (link) => {
-            link.preventDefault()
+        if (null !== show) {
+            e.preventDefault()
 
             let httpRequest = new XMLHttpRequest()
-            httpRequest.open('GET', _this.getAttribute('href'))
+            httpRequest.open('GET', show.getAttribute('href'))
             httpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
             httpRequest.send()
             httpRequest.onreadystatechange = () => {
@@ -25,5 +23,5 @@ $(document).ready(() => {
                 }
             }
         }
-    })
+    }
 })
