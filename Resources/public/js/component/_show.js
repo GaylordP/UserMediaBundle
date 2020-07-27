@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 $(document).ready(() => {
-    document.onclick = (e) => {
+    document.addEventListener('click', (e) => {
         let show = e.target.closest('.user-media-show')
 
         if (null !== show) {
@@ -23,5 +23,5 @@ $(document).ready(() => {
                 }
             }
         }
-    }
+    })
 })
