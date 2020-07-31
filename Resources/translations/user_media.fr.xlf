@@ -106,6 +106,10 @@
                 <source>user.media.not_found</source>
                 <target>Vous n'avez aucun média.</target>
             </trans-unit>
+            <trans-unit id="user.profile.media.not_found">
+                <source>user.profile.media.not_found</source>
+                <target>%username% n'a aucun média.</target>
+            </trans-unit>
             <trans-unit id="user.media.photo.comment.created_successfully">
                 <source>user.media.photo.comment.created_successfully</source>
                 <target>Votre commentaire a été ajouté à la photo.</target>
