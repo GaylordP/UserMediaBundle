@@ -1,5 +1,9 @@
-export const FindElement = (url) => {
-    let elements = document.querySelectorAll('.user-media-comment')
+export const FindElement = (url, dom) => {
+    if (undefined === dom) {
+        dom = document
+    }
+
+    let elements = dom.querySelectorAll('.user-media-comment')
 
     elements.forEach((element) => {
         let token = element.getAttribute('data-user-media-token')
@@ -8,17 +12,21 @@ export const FindElement = (url) => {
     })
 }
 
-export const EventSourceListener = (eventSource) => {
+export const EventSourceListener = (eventSource, dom) => {
+    if (undefined === dom) {
+        dom = document
+    }
+
     eventSource.addEventListener('user_media_comment', (e) => {
         let data = JSON.parse(e.data)
-        let elements = document.querySelectorAll('.user-media-comment[data-user-media-token="' + data.token + '"]')
+        let elements = dom.querySelectorAll('.user-media-comment[data-user-media-token="' + data.token + '"]')
 
         elements.forEach((element) => {
             let badge = element.querySelector('.badge')
             badge.innerText = data.count
         })
 
-        let show = document.querySelector('#user-media-' + data.token)
+        let show = dom.querySelector('#user-media-' + data.token)
 
         if (null !== show) {
             let userMediaNoComment = show.querySelector('.user-media-no-comment')

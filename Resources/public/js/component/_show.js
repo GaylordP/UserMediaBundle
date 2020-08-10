@@ -1,4 +1,12 @@
 import $ from 'jquery'
+import {
+    EventSourceListener as UserMediaLikeEventSourceListener,
+    FindElement as UserMediaLikeFindElement
+} from '../mercure/UserMediaLike'
+import {
+    EventSourceListener as UserMediaCommentEventSourceListener,
+    FindElement as UserMediaCommentFindElement
+} from '../mercure/UserMediaComment'
 
 $(document).ready(() => {
     document.addEventListener('click', (e) => {
@@ -20,6 +28,25 @@ $(document).ready(() => {
                     let json = JSON.parse(httpRequest.responseText)
 
                     BootstrapModal(json.title, json.body)
+
+                    let modalBody = document.querySelector('.modal-body')
+
+                    let url = new URL('http://localhost:3000/.well-known/mercure')
+                    UserMediaCommentFindElement(url, modalBody)
+                    UserMediaLikeFindElement(url, modalBody)
+                    let eventSource = new EventSource(url, {
+                        withCredentials: true
+                    })
+
+                    /*
+                    Attention, seul un des évènements doit être écouter, car l'évènement sur les cliques est lié à l'utilisateur et non le LIKE
+                     */
+                    UserMediaCommentEventSourceListener(eventSource, modalBody)
+                    UserMediaLikeEventSourceListener(eventSource, modalBody)
+
+                    $('#bootstrapModal').on('hidden.bs.modal', function (e) {
+                        eventSource.close()
+                    })
                 }
             }
         }

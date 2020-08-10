@@ -1,5 +1,9 @@
-export const FindElement = (url) => {
-    let elements = document.querySelectorAll('.user-media-like')
+export const FindElement = (url, dom) => {
+    if (undefined === dom) {
+        dom = document
+    }
+
+    let elements = dom.querySelectorAll('.user-media-like')
 
     elements.forEach((element) => {
         let token = element.getAttribute('data-user-media-token')
@@ -8,10 +12,14 @@ export const FindElement = (url) => {
     })
 }
 
-export const EventSourceListener = (eventSource) => {
+export const EventSourceListener = (eventSource, dom) => {
+    if (undefined === dom) {
+        dom = document
+    }
+
     eventSource.addEventListener('user_media_like', (e) => {
         let data = JSON.parse(e.data)
-        let elements = document.querySelectorAll('.user-media-like[data-user-media-token="' + data.token + '"]')
+        let elements = dom.querySelectorAll('.user-media-like[data-user-media-token="' + data.token + '"]')
 
         elements.forEach((element) => {
             let badge = element.querySelector('.badge')
@@ -21,7 +29,7 @@ export const EventSourceListener = (eventSource) => {
 
     eventSource.addEventListener('user_media_like_click', (e) => {
         let data = JSON.parse(e.data)
-        let elements = document.querySelectorAll('.user-media-like[data-user-media-token="' + data.token + '"]')
+        let elements = dom.querySelectorAll('.user-media-like[data-user-media-token="' + data.token + '"]')
 
         elements.forEach((element) => {
             if (true === data.isLiked) {
