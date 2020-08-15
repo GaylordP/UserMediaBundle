@@ -27,7 +27,7 @@ $(document).ready(() => {
                 ) {
                     let json = JSON.parse(httpRequest.responseText)
 
-                    BootstrapModal(json.title, json.body)
+                    new BootstrapModal(json.title, json.body)
 
                     let modalBody = document.querySelector('.modal-body')
 
